@@ -1,6 +1,6 @@
 package com.shoppingmall.goods.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ImageFileVO {
 	private int image_id;

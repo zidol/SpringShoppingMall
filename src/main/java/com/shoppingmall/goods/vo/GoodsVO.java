@@ -1,6 +1,6 @@
 package com.shoppingmall.goods.vo;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class GoodsVO {
 	private int goods_id;

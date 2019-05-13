@@ -19,20 +19,20 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	
-		<!-- 타일즈 설정 -->
-	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+	<!-- 타일즈 설정 -->
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<beans:property name="definitions">
 			<beans:list>
 				<beans:value>classpah:tiles/*.xml</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="preparerFactoryClass" 
-		value="org.springframework.web.servlet.tiles2.SpringBeanPreparerFactory"/>
+		value="org.springframework.web.servlet.tiles3.SpringBeanPreparerFactory"/>
 	</beans:bean>
 	
 
 	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<beans:property name="viewClass" value="org.springframework.web.servlet.view.titles2.TilesView"/>
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.titles3.TilesView"/>
 	</beans:bean>
 	
 	<!-- 2단계 3단계 요청에 대한 인터셉터 설정 -->
