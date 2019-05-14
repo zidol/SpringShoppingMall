@@ -10,7 +10,7 @@
 		<result property="goods_publisher" column="goods_publisher" />
 		<result property="goods_price" column="goods_price" />
 		<result property="goods_sales_price" column="goods_sales_price" />
-		<result property="goods_point" column="goods_point" />
+		<!-- <result property="goods_point" column="goods_point" /> -->
 		<result property="goods_published_date" column="goods_published_date" />
 		<result property="goods_total_page" column="goods_total_page" />
 		<result property="goods_isbn" column="goods_isbn" />
@@ -20,10 +20,11 @@
 		<result property="goods_status" column="goods_status" />
 		<result property="goods_intro" column="goods_intro" />
 		<result property="goods_writer_intro" column="goods_writer_intro" />
-		<result property="goods_publisher_comment" column="goods_publisher_comment" />
-		<result property="goods_recommendation" column="goods_recommendation" />
+		<!-- <result property="goods_publisher_comment" column="goods_publisher_comment" /> -->
+		<!-- <result property="goods_recommendation" column="goods_recommendation" /> -->
 		<result property="goods_contents_order" column="goods_contents_order" />
-		<result property="goods_enter_date" column="goods_enter_date" />
+		<!-- <result property="goods_enter_date" column="goods_enter_date" /> -->
+	  	<result property="goods_fileName" column="filename" />
 	</resultMap>
 	
 	<resultMap id="imageResult" type="imageFileVO">
@@ -32,7 +33,7 @@
 	   <result property="filename" column="filename" />
 	   <result property="reg_id" column="reg_id" />
 	   <result property="filetype" column="filetype" />
-	   <result property="reg_date" column="reg_date" />
+	   <!-- <result property="reg_date" column="reg_date" /> -->
 	</resultMap>
 	
 	<select id="selectGoodsList" parameterType="String" resultMap="goodsResult">
@@ -43,8 +44,44 @@
 					where g.goods_id = i.goods_id
 					and i.filetype='main_image'
 					and goods_status=#{goodsStatus}
-					order bu g.goods_enter_date) t
+					order by g.goods_enter_date) t
 				where rowNum < 16
+		]]>
+	</select>
+	
+	<select id="selectGoodsDetail" parameterType="String" resultMap="goodsResult">
+		<![CDATA[
+			select g.*, d.filename from goods g, goods_image i
+			where g.goods_id = i.goods_id
+			and i.filetype='main_image'
+			and g.goods_id=#{goods_id}
+			order by g.goods_id
+		]]>
+	</select>
+	
+	<select id="selectGoodsDetailImage" parameterType="String" resultMap="goodsResult">
+		<![CDATA[
+			select * from goods_image
+			where filetype != 'main_image'
+			and goods_id=#{goods_id}
+		]]>
+	</select>
+	
+	<select id="selectGoodsBySearchWord" parameterType="String" resultMap="goodsResult">
+		<![CDATA[
+			select g.*, d.filename from goods g, goods_image i
+			where g.goods_id = i.goods_id
+			and i.filetype='main_image'
+			and g.goods_title like '%'||#{searchWord}||'%'
+			order by g.goods_enter_date desc
+		]]>
+	</select>
+	
+	<select id="selectKeywordSearch" parameterType="String" resultType="String">
+		<![CDATA[
+			select goods_title from goods
+			where goods_title like '%'||#{keyword}||'%'
+			order by goods_enter_date desc
 		]]>
 	</select>
 </mapper>
