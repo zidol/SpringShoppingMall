@@ -30,35 +30,42 @@
 	<resultMap id="imageResult" type="imageFileVO">
 	   <result property="image_id" column="image_id" />
 	   <result property="goods_id" column="goods_id" />
-	   <result property="filename" column="filename" />
+	   <result property="fileName" column="filename" />
 	   <result property="reg_id" column="reg_id" />
-	   <result property="filetype" column="filetype" />
+	   <result property="fileType" column="filetype" />
 	   <!-- <result property="reg_date" column="reg_date" /> -->
 	</resultMap>
 	
+	<!-- 상품 리스트 15개 -->
 	<select id="selectGoodsList" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-			select t.*
-				from(
-					select g.*, d.filename from goods g, goods_image i
-					where g.goods_id = i.goods_id
+		   select t.*
+			from(
+				 select g.*, i.filename 
+				   from goods g, goods_image i
+			      where g.goods_id = i.goods_id
 					and i.filetype='main_image'
 					and goods_status=#{goodsStatus}
-					order by g.goods_enter_date) t
-				where rowNum < 16
+				  order by g.goods_enter_date
+				) t
+		    where rowNum < 16
 		]]>
 	</select>
 	
+	<!-- 상품상세 (1건) -->
 	<select id="selectGoodsDetail" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-			select g.*, d.filename from goods g, goods_image i
-			where g.goods_id = i.goods_id
-			and i.filetype='main_image'
-			and g.goods_id=#{goods_id}
-			order by g.goods_id
+			select g.*
+			     , i.filename 
+			  from goods g, goods_image i
+			 where g.goods_id = i.goods_id
+			   and i.filetype='main_image'
+			   and g.goods_id=#{goods_id}
+			 order by g.goods_id
 		]]>
 	</select>
 	
+	<!-- 상품 이미지 보기(1건) -->
 	<select id="selectGoodsDetailImage" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
 			select * from goods_image
@@ -67,21 +74,27 @@
 		]]>
 	</select>
 	
+	<!-- 상품 제목으로 검색 (조인해서 파일이름도 포함) -->
 	<select id="selectGoodsBySearchWord" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-			select g.*, d.filename from goods g, goods_image i
-			where g.goods_id = i.goods_id
-			and i.filetype='main_image'
-			and g.goods_title like '%'||#{searchWord}||'%'
-			order by g.goods_enter_date desc
+			select g.*
+			     , i.filename 
+			  from goods g
+			     , goods_image i
+			 where g.goods_id = i.goods_id
+			   and i.filetype='main_image'
+			   and g.goods_title like '%'||#{searchWord}||'%'
+	      order by g.goods_enter_date desc
 		]]>
 	</select>
 	
+	<!-- 상품 제목 키워드로 검색 (상품제목만) -->
 	<select id="selectKeywordSearch" parameterType="String" resultType="String">
 		<![CDATA[
-			select goods_title from goods
-			where goods_title like '%'||#{keyword}||'%'
-			order by goods_enter_date desc
+			select goods_title 
+			  from goods
+			 where goods_title like '%'||#{keyword}||'%'
+			 order by goods_enter_date desc
 		]]>
 	</select>
 </mapper>

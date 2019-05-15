@@ -23,6 +23,7 @@ public class GoodsVO {
 	private String goods_recommendation;
 	private String goods_contents_order;
 	private Date goods_enter_date;
+	private String goods_fileName;
 
 	public int getGoods_id() {
 		return goods_id;
@@ -182,6 +183,14 @@ public class GoodsVO {
 
 	public void setGoods_enter_date(Date goods_enter_date) {
 		this.goods_enter_date = goods_enter_date;
+	}
+
+	public String getGoods_fileName() {
+		return goods_fileName;
+	}
+
+	public void setGoods_fileName(String goods_fileName) {
+		this.goods_fileName = goods_fileName;
 	}
 
 }
