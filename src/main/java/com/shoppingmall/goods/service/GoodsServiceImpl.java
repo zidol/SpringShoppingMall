@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shopping.goods.dao.GoodsDAO;
 import com.shoppingmall.goods.vo.GoodsVO;
 import com.shoppingmall.goods.vo.ImageFileVO;
 
