@@ -6,10 +6,11 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<context:component-scan base-package="com.shoppingmall"/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
@@ -21,20 +22,17 @@
 	
 	<!-- 타일즈 설정 -->
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<beans:property name="definitions">
-			<beans:list>
-				<beans:value>classpah:tiles/*.xml</beans:value>
-			</beans:list>
-		</beans:property>
-		<beans:property name="preparerFactoryClass" 
-		value="org.springframework.web.servlet.tiles3.SpringBeanPreparerFactory"/>
-	</beans:bean>
-	
+	<beans:property name="definitions">
+		<beans:list>
+			<beans:value>classpath:tiles/*.xml</beans:value>
+		</beans:list>
+	</beans:property>
+	<beans:property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"/>
+</beans:bean>
+<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"> 
+	<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/> 
+</beans:bean>
 
-	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-		<beans:property name="viewClass" value="org.springframework.web.servlet.view.titles3.TilesView"/>
-	</beans:bean>
-	
 	<!-- 2단계 3단계 요청에 대한 인터셉터 설정 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -50,6 +48,5 @@
 		<beans:property name="maxInMemorySize" value="1000000"/>
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
-	<context:component-scan base-package="com.shoppingmall" />
 	
 </beans:beans>
