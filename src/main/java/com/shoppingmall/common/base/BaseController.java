@@ -1,4 +1,4 @@
-package com.shopping.common.base;
+package com.shoppingmall.common.base;
 
 import java.io.File;
 import java.text.DecimalFormat;

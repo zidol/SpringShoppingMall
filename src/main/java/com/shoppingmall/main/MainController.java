@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.shopping.common.base.BaseController;
+import com.shoppingmall.common.base.BaseController;
 import com.shoppingmall.goods.service.GoodsService;
 import com.shoppingmall.goods.vo.GoodsVO;
 
@@ -27,16 +27,18 @@ public class MainController extends BaseController{
 	
 	@RequestMapping(value="/main/main.do", method= {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("controller");
+		System.out.println("controller1");
 		HttpSession session;
 		ModelAndView mav = new ModelAndView();
 		String viewName= (String)request.getAttribute("viewName");
 		mav.setViewName(viewName);
-		
+		System.out.println("controller2");
 		session = request.getSession();
 		session.setAttribute("side_menu", "user");
+		System.out.println("controller3");
 		Map<String, List<GoodsVO>>goodsMap = goodsService.listGoods();
 		mav.addObject("goodsMap", goodsMap);
+		System.out.println("controller4");
 		return mav;
 	}
 }

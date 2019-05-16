@@ -45,7 +45,7 @@
 				   from goods g, goods_image i
 			      where g.goods_id = i.goods_id
 					and i.filetype='main_image'
-					and goods_status=#{goodsStatus}
+					and g.goods_status=#{goodsStatus}
 				  order by g.goods_enter_date
 				) t
 		    where rowNum < 16

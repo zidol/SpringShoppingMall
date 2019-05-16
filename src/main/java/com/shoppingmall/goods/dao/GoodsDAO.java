@@ -1,4 +1,4 @@
-package com.shopping.goods.dao;
+package com.shoppingmall.goods.dao;
 
 import java.util.List;
 

@@ -51,12 +51,19 @@
 		    <version>3.5.1</version>
 		</dependency>
 		
+		<!-- json -->
+        <dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		    <version>2.4</version>
+		    <classifier>jdk15</classifier>    
+		</dependency>
 		
-		<!-- jackson-databind : json 데이터 처리 -->
+		<!-- jquery -->
 		<dependency>
-		    <groupId>com.fasterxml.jackson.core</groupId>
-		    <artifactId>jackson-databind</artifactId>
-		    <version>2.9.8</version>
+		    <groupId>org.webjars</groupId>
+		    <artifactId>jquery</artifactId>
+		    <version>3.4.1</version>
 		</dependency>
 		
 		<!-- file upload -->
@@ -88,14 +95,6 @@
 		    <scope>system</scope>
 		    <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc8.jar</systemPath>
 		</dependency> -->
-		
-		<!-- json -->
-        <dependency>
-		    <groupId>net.sf.json-lib</groupId>
-		    <artifactId>json-lib</artifactId>
-		    <version>2.4</version>
-		    <classifier>jdk15</classifier>    
-		</dependency>
 		
 		<!-- Spring -->
 		<dependency>

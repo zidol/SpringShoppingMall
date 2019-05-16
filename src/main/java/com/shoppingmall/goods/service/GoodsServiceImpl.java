@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shopping.goods.dao.GoodsDAO;
+import com.shoppingmall.goods.dao.GoodsDAO;
 import com.shoppingmall.goods.vo.GoodsVO;
 import com.shoppingmall.goods.vo.ImageFileVO;
 
@@ -27,7 +27,7 @@ public class GoodsServiceImpl implements GoodsService{
 		goodsMap.put("bestseller", goodsList);
 		
 		goodsList = goodsDAO.selectGoodsList("newbook");
-		goodsMap.put("steadyseller", goodsList);
+		goodsMap.put("newbook", goodsList);
 		
 		goodsList = goodsDAO.selectGoodsList("steadyseller");
 		goodsMap.put("steadyseller", goodsList);

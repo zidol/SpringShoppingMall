@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.shopping.common.base.BaseController;
+import com.shoppingmall.common.base.BaseController;
 import com.shoppingmall.goods.service.GoodsService;
 import com.shoppingmall.goods.vo.GoodsVO;
 
@@ -24,7 +24,7 @@ import net.sf.json.JSONObject;
 
 @Controller("goodsController")
 @RequestMapping(value="/goods")
-public class GoodsControllerImpl extends BaseController   implements GoodsController {
+public class GoodsControllerImpl extends BaseController implements GoodsController {
 	@Autowired
 	GoodsService goodsService;
 	
