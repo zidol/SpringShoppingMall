@@ -24,7 +24,7 @@
 		<!-- <result property="goods_recommendation" column="goods_recommendation" /> -->
 		<result property="goods_contents_order" column="goods_contents_order" />
 		<!-- <result property="goods_enter_date" column="goods_enter_date" /> -->
-	  	<result property="goods_fileName" column="filename" />
+	  	<result property="goods_fileName" column="fileName" />
 	</resultMap>
 	
 	<resultMap id="imageResult" type="imageFileVO">

@@ -38,7 +38,7 @@ public class MainController extends BaseController{
 		System.out.println("controller3");
 		Map<String, List<GoodsVO>>goodsMap = goodsService.listGoods();
 		mav.addObject("goodsMap", goodsMap);
-		System.out.println("controller4");
+		System.out.println(mav);
 		return mav;
 	}
 }

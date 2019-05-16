@@ -11,16 +11,19 @@ import org.springframework.stereotype.Repository;
 import com.shoppingmall.goods.vo.GoodsVO;
 import com.shoppingmall.goods.vo.ImageFileVO;
 
+
+
 @Repository("goodsDAO")
-public class GoodsDAOImpl implements GoodsDAO{
+public class GoodsDAOImpl  implements GoodsDAO{
 	@Autowired
 	private SqlSession sqlSession;
 
 	@Override
-	public List<GoodsVO> selectGoodsList(String goodsStatus) throws DataAccessException {
+	public List<GoodsVO> selectGoodsList(String goodsStatus ) throws DataAccessException {
+		System.out.println("dao1");
 		List<GoodsVO> goodsList=(ArrayList)sqlSession.selectList("mapper.goods.selectGoodsList",goodsStatus);
+		System.out.println("dao2");
 	   return goodsList;	
-     
 	}
 	@Override
 	public List<String> selectKeywordSearch(String keyword) throws DataAccessException {
