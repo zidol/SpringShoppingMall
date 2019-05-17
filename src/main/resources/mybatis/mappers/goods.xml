@@ -30,7 +30,7 @@
 	<resultMap id="imageResult" type="imageFileVO">
 	   <result property="image_id" column="image_id" />
 	   <result property="goods_id" column="goods_id" />
-	   <result property="fileName" column="filename" />
+	   <result property="fileName" column="fileName" />
 	   <result property="reg_id" column="reg_id" />
 	   <result property="fileType" column="filetype" />
 	   <!-- <result property="reg_date" column="reg_date" /> -->
