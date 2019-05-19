@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="mapper.goods">
-	<resultMap id="goodsResult" type="goodsVO">
-		<id property="goods_id" column="goods_id"/>
-		<result property="goods_sort" column="goods_sort"/>
-		<result property="goods_title" column="goods_title"/>
-		<result property="goods_writer" column="goods_writer"/>
-		
+	<resultMap type="goodsVO" id="goodsResult">
+		<id property="goods_id" column="goods_id" />
+		<result property="goods_sort" column="goods_sort" />
+		<result property="goods_title" column="goods_title" />
+		<result property="goods_writer" column="goods_writer" />
 		<result property="goods_publisher" column="goods_publisher" />
 		<result property="goods_price" column="goods_price" />
 		<result property="goods_sales_price" column="goods_sales_price" />
@@ -14,7 +14,6 @@
 		<result property="goods_published_date" column="goods_published_date" />
 		<result property="goods_total_page" column="goods_total_page" />
 		<result property="goods_isbn" column="goods_isbn" />
-		
 		<result property="goods_delivery_price" column="goods_delivery_price" />
 		<result property="goods_delivery_date" column="goods_delivery_date" />
 		<result property="goods_status" column="goods_status" />
@@ -23,78 +22,74 @@
 		<!-- <result property="goods_publisher_comment" column="goods_publisher_comment" /> -->
 		<!-- <result property="goods_recommendation" column="goods_recommendation" /> -->
 		<result property="goods_contents_order" column="goods_contents_order" />
-		<!-- <result property="goods_enter_date" column="goods_enter_date" /> -->
-	  	<result property="goods_fileName" column="fileName" />
+		<!-- <result property="goods_enter_date " column="goods_enter_date" /> -->
+		<result property="goods_fileName" column="filename" />
 	</resultMap>
 	
-	<resultMap id="imageResult" type="imageFileVO">
-	   <result property="image_id" column="image_id" />
-	   <result property="goods_id" column="goods_id" />
-	   <result property="fileName" column="fileName" />
-	   <result property="reg_id" column="reg_id" />
-	   <result property="fileType" column="filetype" />
-	   <!-- <result property="reg_date" column="reg_date" /> -->
+	<resultMap type="imageFileVO" id="imageResult">
+		<id property="image_id" column="image_id" />
+		<result property="goods_id" column="goods_id" />
+		<result property="fileName" column="filename" />
+		<result property="reg_id" column="reg_id" />
+		<result property="fileType" column="filetype" />
+		<!-- <result property="reg_date" column="reg_date" /> -->
 	</resultMap>
-	
-	<!-- 상품 리스트 15개 -->
+
+	<!-- goodsStatus의 값으로 '신상품', '베스트셀러', '스테디셀러'를 전달하여 15개까지 검색 -->
+	<!-- 상품 리스트 보기 (15개 검색) - 조인(goods, goods_image) -->
 	<select id="selectGoodsList" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-		   select t.*
-			from(
-				 select g.*, i.filename 
-				   from goods g, goods_image i
-			      where g.goods_id = i.goods_id
-					and i.filetype='main_image'
-					and g.goods_status=#{goodsStatus}
-				  order by g.goods_enter_date
-				) t
-		    where rowNum < 16
+		select t.* from (
+			select g.*, i.filename 
+			from goods g, goods_image i
+			where g.goods_id = i.goods_id
+			and i.filetype = 'main_image'
+			and g.goods_status = #{goodsStatus}
+			order by g.goods_enter_date desc) t
+		where rowNum < 16
 		]]>
 	</select>
 	
-	<!-- 상품상세 (1건) -->
+	<!-- 상품 상세 보기 (1건) - 조인(goods, goods_image) -->
 	<select id="selectGoodsDetail" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-			select g.*
-			     , i.filename 
-			  from goods g, goods_image i
-			 where g.goods_id = i.goods_id
-			   and i.filetype='main_image'
-			   and g.goods_id=#{goods_id}
-			 order by g.goods_id
+		select g.*, i.filename 
+		from goods g, goods_image i
+		where g.goods_id = i.goods_id
+		and i.filetype = 'main_image'
+		and g.goods_id = #{goods_id}
+		order by g.goods_id
 		]]>
 	</select>
 	
-	<!-- 상품 이미지 보기(1건) -->
-	<select id="selectGoodsDetailImage" parameterType="String" resultMap="goodsResult">
+	<!-- 상품 이미지 보기 (1건) -->
+	<select id="selectGoodsDetailImage" parameterType="String" resultMap="imageResult">
 		<![CDATA[
-			select * from goods_image
-			where filetype != 'main_image'
-			and goods_id=#{goods_id}
+		select * from goods_image
+		where filetype != 'main_image'
+		and goods_id = #{goods_id}
 		]]>
 	</select>
 	
-	<!-- 상품 제목으로 검색 (조인해서 파일이름도 포함) -->
+	<!-- 상품제목 키워드로 상품 검색 - 조인(goods, goods_image) -->
 	<select id="selectGoodsBySearchWord" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-			select g.*
-			     , i.filename 
-			  from goods g
-			     , goods_image i
-			 where g.goods_id = i.goods_id
-			   and i.filetype='main_image'
-			   and g.goods_title like '%'||#{searchWord}||'%'
-	      order by g.goods_enter_date desc
+		select g.*, i.filename
+		from goods g, goods_image i
+		where g.goods_id = i.goods_id
+		and i.filetype = 'main_image'
+		and g.goods_title like '%'|| #{searchWord} ||'%'
+		order by g.goods_enter_date desc
 		]]>
 	</select>
 	
-	<!-- 상품 제목 키워드로 검색 (상품제목만) -->
+	<!-- 상품제목 키워드로 상품제목만 검색 -->
 	<select id="selectKeywordSearch" parameterType="String" resultType="String">
 		<![CDATA[
-			select goods_title 
-			  from goods
-			 where goods_title like '%'||#{keyword}||'%'
-			 order by goods_enter_date desc
+		select goods_title from goods
+		where goods_title like '%'|| #{keyword} ||'%'
+		order by goods_enter_date desc
 		]]>
 	</select>
+	
 </mapper>
