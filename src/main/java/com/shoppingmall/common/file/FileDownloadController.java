@@ -18,9 +18,11 @@ public class FileDownloadController {
 //	private static String CURR_IMAGE_REPO_PATH = "/Users/zidol/Desktop/shopping/file_repo";//mac
 	
 	@RequestMapping("/download")
-	protected void download(@RequestParam("fileName")String fileName, @RequestParam("goods_id")String goods_id, HttpServletResponse response) throws Exception{
+	protected void download(@RequestParam("fileName")String fileName, 
+							@RequestParam("goods_id")String goods_id, 
+							HttpServletResponse response) throws Exception{
 		OutputStream out = response.getOutputStream();
-		String filePath = CURR_IMAGE_REPO_PATH + "\\=" + goods_id + "\\" + fileName;
+		String filePath = CURR_IMAGE_REPO_PATH + "\\" + goods_id + "\\" + fileName;
 		File image = new File(filePath);
 		
 		response.setHeader("Cache-Control", "no-cache");

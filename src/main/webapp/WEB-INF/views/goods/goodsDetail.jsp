@@ -94,11 +94,11 @@ function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
 	} 
 	
 	
-		var total_price,final_total_price;
-		var order_goods_qty=document.getElementById("order_goods_qty");
-		
-		var formObj=document.createElement("form");
-		var i_goods_id = document.createElement("input"); 
+	var total_price,final_total_price;
+	var order_goods_qty=document.getElementById("order_goods_qty");
+	
+	var formObj=document.createElement("form");
+	var i_goods_id = document.createElement("input"); 
     var i_goods_title = document.createElement("input");
     var i_goods_sales_price=document.createElement("input");
     var i_fileName=document.createElement("input");
@@ -199,11 +199,11 @@ function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
 					<td class="fixed">수량</td>
 					<td class="fixed">
 			      <select style="width: 60px;" id="order_goods_qty">
-				      <option>1</option>
-							<option>2</option>
-							<option>3</option>
-							<option>4</option>
-							<option>5</option>
+			      	<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
 			     </select>
 					 </td>
 				</tr>
