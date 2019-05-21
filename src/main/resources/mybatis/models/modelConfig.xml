@@ -5,8 +5,8 @@
 	<typeAliases>
 		<typeAlias alias="goodsVO" type="com.shoppingmall.goods.vo.GoodsVO"/>
 		<typeAlias alias="imageFileVO" type="com.shoppingmall.goods.vo.ImageFileVO"/>
-		<!-- <typeAlias alias="memberVO" type="com.shoppingmall.member.vo.memeberVO"/>
-		<typeAlias alias="cartVO" type="com.shoppingmall.cart.vo.cartVO"/>
+		<typeAlias alias="memberVO" type="com.shoppingmall.member.vo.MemberVO"/>
+		<!-- <typeAlias alias="cartVO" type="com.shoppingmall.cart.vo.cartVO"/>
 		<typeAlias alias="orderVO" type="com.shoppingmall.order.vo.orderVO"/>
 		<typeAlias alias="mypageVO" type="com.shoppingmall.mypage.vo.mypageVO"/> -->
 	</typeAliases>

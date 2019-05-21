@@ -417,3 +417,96 @@ Insert into GOODS_IMAGE (IMAGE_ID,GOODS_ID,FILENAME,REG_ID,FILETYPE,REG_DATE) va
 Insert into GOODS_IMAGE (IMAGE_ID,GOODS_ID,FILENAME,REG_ID,FILETYPE,REG_DATE) values (343,354,'모두의 딥러닝_상세.jpg','admin','detail_image1',to_date('18/10/23','RR/MM/DD'));
 Insert into GOODS_IMAGE (IMAGE_ID,GOODS_ID,FILENAME,REG_ID,FILETYPE,REG_DATE) values (345,356,'마인_메인.jpg','admin','main_image',to_date('18/10/23','RR/MM/DD'));
 
+Insert into MEMBER (MEMBER_ID
+,MEMBER_PW
+,MEMBER_NAME
+,MEMBER_GENDER
+,TEL1
+,TEL2
+,TEL3
+,HP1
+,HP2
+,HP3
+,sms_yn
+,EMAIL1
+,EMAIL2
+,email_yn
+,ZIPCODE
+,road_address
+,jibun_address
+,detail_address
+,birth_year
+,birth_month
+,birth_day
+,JOIN_DATE
+,DELete_YN) 
+values ('korea01'
+,'1234'
+,'어드민'
+,'101'
+,'02'
+,'1111'
+,'2222'
+,'010'
+,'1111'
+,'2222'
+,'Y'
+,'admin'
+,'test.com,non'
+,'Y'
+,'06253'
+,'서울 강남구 강남대로 298 (역삼동)'
+,'서울 강남구 역삼동 838'
+,'럭키빌딩 101호'
+,'2000'
+,'5'
+,'10'
+,to_date('18/10/16','RR/MM/DD')
+,'N');
+Insert into MEMBER (MEMBER_ID
+,MEMBER_PW
+,MEMBER_NAME
+,MEMBER_GENDER
+,TEL1
+,TEL2
+,TEL3
+,HP1
+,HP2
+,HP3
+,sms_yn
+,EMAIL1
+,EMAIL2
+,email_yn
+,ZIPCODE
+,road_address
+,jibun_address
+,detail_address
+,birth_year
+,birth_month
+,birth_day
+,JOIN_DATE
+,DELete_YN)
+values 
+('korea02'
+,'1234'
+,'안지혁'
+,'101'
+,'02'
+,'1111'
+,'2222'
+,'010'
+,'2222'
+,'3333'
+,'Y'
+,'lee'
+,'test.com,non'
+,'Y'
+,'13547'
+,'경기 성남시 분당구 고기로 25 (동원동)'
+,'경기 성남시 분당구 동원동 79-1'
+,'럭키빌딩 101호'
+,'2000'
+,'5'
+,'10'
+,to_date('18/10/23','RR/MM/DD')
+,'N');

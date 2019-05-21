@@ -5,9 +5,11 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 
 import com.shoppingmall.member.vo.MemberVO;
 
+@Repository("memberDAO")
 public class MemberDAOImpl implements MemberDAO{
 	@Autowired
 	private SqlSession sqlSession;
@@ -25,7 +27,7 @@ public class MemberDAOImpl implements MemberDAO{
 
 	@Override
 	public String selectOverlappedID(String id) throws DataAccessException {
-		String result = sqlSession.selectOne("mapper.member.selectOverlappedOD",id);
+		String result = sqlSession.selectOne("mapper.member.selectOverlappedID",id);
 		return result;
 	}
 

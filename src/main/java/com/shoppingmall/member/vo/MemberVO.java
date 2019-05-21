@@ -2,6 +2,9 @@ package com.shoppingmall.member.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component("memberVO")
 public class MemberVO {
 	private String member_id;
 	private String member_pw;
@@ -209,6 +212,17 @@ public class MemberVO {
 
 	public void setDelete_yn(String delete_yn) {
 		this.delete_yn = delete_yn;
+	}
+
+	@Override
+	public String toString() {
+		return "MemberVO [member_id=" + member_id + ", member_pw=" + member_pw + ", member_name=" + member_name
+				+ ", member_gender=" + member_gender + ", tel1=" + tel1 + ", tel2=" + tel2 + ", tel3=" + tel3 + ", hp1="
+				+ hp1 + ", hp2=" + hp2 + ", hp3=" + hp3 + ", sms_yn=" + sms_yn + ", email1=" + email1 + ", email2="
+				+ email2 + ", email_yn=" + email_yn + ", zipcode=" + zipcode + ", road_address=" + road_address
+				+ ", jibun_address=" + jibun_address + ", detail_address=" + detail_address + ", birth_year="
+				+ birth_year + ", birth_month=" + birth_month + ", birth_day=" + birth_day + ", join_date=" + join_date
+				+ ", delete_yn=" + delete_yn + "]";
 	}
 
 }

@@ -10,15 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.shoppingmall.common.base.BaseController;
 import com.shoppingmall.member.service.MemberService;
 import com.shoppingmall.member.vo.MemberVO;
-
-public class MemberControllerImpl implements MemberController{
+@Controller("memberController")
+@RequestMapping(value="/member")
+public class MemberControllerImpl extends BaseController implements MemberController{
 	@Autowired
 	MemberService memberService;
 	@Autowired
@@ -33,9 +36,9 @@ public class MemberControllerImpl implements MemberController{
 		if(memberVO != null && memberVO.getMember_id() != null) {
 			HttpSession session = request.getSession();
 			session = request.getSession();
-			session.setAttribute("isLogin", true);
+			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", memberVO);
-			
+			System.out.println(memberVO);
 			String action = (String)session.getAttribute("action");
 			if(action != null && action.equals("/order/orderEachGoods.do")) {
 				mav.setViewName("forward:" + action);
@@ -44,7 +47,7 @@ public class MemberControllerImpl implements MemberController{
 			}
 			
 		}else {
-			String message = "";
+			String message = "아이디나 비밀번호가 다릅니다. 다시 로그인 해주세요.";
 			mav.addObject("message", message);
 			mav.setViewName("/member/loginForm");
 		}
@@ -63,7 +66,7 @@ public class MemberControllerImpl implements MemberController{
 	}
 
 	@Override
-	@RequestMapping(value="/addMember.do", method=RequestMethod.POST)
+	@RequestMapping(value="/insertMember.do", method=RequestMethod.POST)
 	public ResponseEntity insertMember(MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		response.setContentType("text/html; charset=UTF-8");
@@ -75,12 +78,12 @@ public class MemberControllerImpl implements MemberController{
 		try {
 			memberService.insertMember(memberVO);
 			message = "<script>";
-			message += "alert('');";
+			message += "alert('회원 가입을 마쳤습니다. 로그인창으로 이동합니다.');";
 			message += "location.href='"+request.getContextPath() + "/member/memberForm.do';";
 			message += "</script>";
 		} catch (Exception e) {
 			message = "<script>";
-			message += "alert('');";
+			message += "alert('작업 중 오류가 발생 했습니다. 다시 시도해 주세요.');";
 			message += "location.href='"+request.getContextPath() + "/member/memberForm.do';";
 			message += "</script>";
 			e.printStackTrace();
