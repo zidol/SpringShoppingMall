@@ -59,7 +59,7 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 	public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		session.setAttribute("isLogin", false);
+		session.setAttribute("isLogOn", false);
 		session.removeAttribute("memberInfo");
 		mav.setViewName("redirect:/main/main.do");
 		return mav;
