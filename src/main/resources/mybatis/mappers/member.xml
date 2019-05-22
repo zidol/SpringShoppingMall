@@ -33,50 +33,47 @@
 		<result property="detail_address" column="detail_address" />
 		<result property="join_date" column="join_date" />
 	</resultMap>	
-	
-	<!-- 아이디,패스워드로 회원조회 -->
+
 	<select id="login" resultType="memberVO"  parameterType="java.util.Map"  >
 	    <![CDATA[
-			SELECT * 
-			 FROM MEMBER 
-			WHERE MEMBER_ID=#{member_id}
-			  AND MEMBER_PW=#{member_pw}			
+			select * 
+			 from member 
+			where member_id=#{member_id}
+			  and member_pw=#{member_pw}			
 			 
 		]]>
 	</select>
 	
-	<!-- 중복아이디 체크 -->
 	<select id="selectOverlappedID" parameterType="String" resultType="String">
-	   SELECT DECODE(COUNT(*),1, 'true', 0, 'false')
-	   FROM MEMBER
-	   WHERE MEMBER_ID = #{id}
+	   select decode(count(*),1, 'true', 0, 'false')
+	   from member
+	   where member_id = #{id}
 	</select>
-
-  <!-- 회원가입 -->	
+	
   <insert id="insertMember"  parameterType="memberVO">
   <![CDATA[
-    	INSERT INTO MEMBER(MEMBER_ID
-	 					  ,MEMBER_PW
-                          ,MEMBER_NAME
-                          ,MEMBER_GENDER
-                          ,BIRTH_YEAR
-                          ,BIRTH_MONTH
-                          ,BIRTH_DAY
-                          ,TEL1
-                          ,TEL2
-                          ,TEL3
-                          ,HP1
-                          ,HP2
-                          ,HP3
-                          ,SMS_YN
-                          ,EMAIL1
-                          ,EMAIL2
-                          ,EMAIL_YN
-                          ,ZIPCODE
-                          ,ROAD_ADDRESS
-                          ,JIBUN_ADDRESS
-                          ,DETAIL_ADDRESS)
-				 VALUES(#{member_id}
+    	insert into member(member_id
+	 					  ,member_pw
+                          ,member_name
+                          ,member_gender
+                          ,birth_year
+                          ,birth_month
+                          ,birth_day
+                          ,tel1
+                          ,tel2
+                          ,tel3
+                          ,hp1
+                          ,hp2
+                          ,hp3
+                          ,sms_yn
+                          ,email1
+                          ,email2
+                          ,email_yn
+                          ,zipcode
+                          ,road_address
+                          ,jibun_address
+                          ,detail_address)
+				 values(#{member_id}
 						,#{member_pw}
 						,#{member_name}
                      	,#{member_gender}

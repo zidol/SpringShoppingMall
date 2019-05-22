@@ -39,63 +39,56 @@
 	<!-- 상품 리스트 보기 (15개 검색) - 조인(goods, goods_image) -->
 	<select id="selectGoodsList" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-		SELECT T.* 
-		  FROM (SELECT G.*
-		             , I.FILENAME 
-			      FROM GOODS G, GOODS_IMAGE I
-			     WHERE G.GOODS_ID = I.GOODS_ID
-			       AND I.FILETYPE = 'main_image'
-			       AND G.GOODS_STATUS = #{goodsStatus}
-		     	 ORDER BY G.GOODS_ENTER_DATE DESC) T
-		  WHERE ROWNUM < 16
+		select t.* from (
+			select g.*, i.filename 
+			from goods g, goods_image i
+			where g.goods_id = i.goods_id
+			and i.filetype = 'main_image'
+			and g.goods_status = #{goodsStatus}
+			order by g.goods_enter_date desc) t
+		where rowNum < 16
 		]]>
 	</select>
 	
 	<!-- 상품 상세 보기 (1건) - 조인(goods, goods_image) -->
 	<select id="selectGoodsDetail" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-		SELECT G.*
-		     , I.FILENAME 
-		  FROM GOODS G
-		     , GOODS_IMAGE I
-		 WHERE G.GOODS_ID = I.GOODS_ID
-		   AND I.FILETYPE = 'main_image'
-		   AND G.GOODS_ID = #{goods_id}
-	  ORDER BY G.GOODS_ID
+		select g.*, i.filename 
+		from goods g, goods_image i
+		where g.goods_id = i.goods_id
+		and i.filetype = 'main_image'
+		and g.goods_id = #{goods_id}
+		order by g.goods_id
 		]]>
 	</select>
 	
 	<!-- 상품 이미지 보기 (1건) -->
 	<select id="selectGoodsDetailImage" parameterType="String" resultMap="imageResult">
 		<![CDATA[
-		SELECT * 
-		  FROM GOODS_IMAGE
-		 WHERE FILETYPE != 'main_image'
-		   AND GOODS_ID = #{goods_id}
+		select * from goods_image
+		where filetype != 'main_image'
+		and goods_id = #{goods_id}
 		]]>
 	</select>
 	
 	<!-- 상품제목 키워드로 상품 검색 - 조인(goods, goods_image) -->
 	<select id="selectGoodsBySearchWord" parameterType="String" resultMap="goodsResult">
 		<![CDATA[
-		SELECT G.*
-		     , I.FILENAME
-		  FROM GOODS G
-		     , GOODS_IMAGE I
-		 WHERE G.GOODS_ID = I.GOODS_ID
-		   AND I.FILETYPE = 'main_image'
-		   AND G.GOODS_TITLE LIKE '%'|| #{searchWord} ||'%'
-	  ORDER BY G.GOODS_ENTER_DATE DESC
+		select g.*, i.filename
+		from goods g, goods_image i
+		where g.goods_id = i.goods_id
+		and i.filetype = 'main_image'
+		and g.goods_title like '%'|| #{searchWord} ||'%'
+		order by g.goods_enter_date desc
 		]]>
 	</select>
 	
 	<!-- 상품제목 키워드로 상품제목만 검색 -->
 	<select id="selectKeywordSearch" parameterType="String" resultType="String">
 		<![CDATA[
-		SELECT GOODS_TITLE 
-		  FROM GOODS
-		 WHERE GOODS_TITLE LIKE '%'|| #{keyword} ||'%'
-	  ORDER BY GOODS_ENTER_DATE DESC
+		select goods_title from goods
+		where goods_title like '%'|| #{keyword} ||'%'
+		order by goods_enter_date desc
 		]]>
 	</select>
 	
