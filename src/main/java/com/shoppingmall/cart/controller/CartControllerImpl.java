@@ -52,10 +52,9 @@ public class CartControllerImpl extends BaseController implements CartController
 		String member_id = memberVO.getMember_id();
 		
 		cartVO.setMember_id(member_id);
-		
 		cartVO.setGoods_id(goods_id);
-		cartVO.setMember_id(member_id);
 		boolean isAreadyExisted = cartService.findCartGoods(cartVO);
+		System.out.println("2");
 		System.out.println("isAreadyExisted:" + isAreadyExisted);
 		if(isAreadyExisted == true) {
 			return "already_existed";
@@ -72,8 +71,8 @@ public class CartControllerImpl extends BaseController implements CartController
 		HttpSession session = request.getSession();
 		memberVO = (MemberVO)session.getAttribute("memberInfo");
 		String member_id = memberVO.getMember_id();
-		cartVO.setMember_id(member_id);
 		cartVO.setGoods_id(goods_id);
+		cartVO.setMember_id(member_id);
 		cartVO.setCart_goods_qty(cart_goods_qty);
 		boolean result = cartService.modifyCartQty(cartVO);
 		

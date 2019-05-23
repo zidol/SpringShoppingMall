@@ -14,7 +14,7 @@ public class OrderVO {
 	private String goods_title;
 	private int order_goods_qty;
 	private int goods_sales_price;
-	private String goods_filename;
+	private String goods_fileName;
 	private String receiver_name;
 	private String receiver_hp1;
 	private String receiver_hp2;
@@ -105,11 +105,11 @@ public class OrderVO {
 	}
 
 	public String getGoods_filename() {
-		return goods_filename;
+		return goods_fileName;
 	}
 
-	public void setGoods_filename(String goods_filename) {
-		this.goods_filename = goods_filename;
+	public void setGoods_fileName(String goods_fileName) {
+		this.goods_fileName = goods_fileName;
 	}
 
 	public String getReceiver_name() {

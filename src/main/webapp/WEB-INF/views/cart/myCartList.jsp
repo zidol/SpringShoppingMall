@@ -89,10 +89,11 @@ function modify_cart_qty(goods_id,bookPrice,index){
 			alert("에러가 발생했습니다."+data);
 		},
 		complete : function(data, textStatus) {
-			//alert("작업을완료 했습니다");
-			
+			alert("작업을완료 했습니다");
+			document.location.href="${contextPath}/cart/myCartList.do";
 		}
 	}); //end ajax	
+	
 }
 
 function delete_cart_goods(cart_id){
@@ -108,7 +109,7 @@ function delete_cart_goods(cart_id){
     formObj.action="${contextPath}/cart/removeCartGoods.do";
     formObj.submit();
 }
-//각각의 상품을 주문 시 
+
 function fn_order_each_goods(goods_id,goods_title,goods_sales_price,fileName){
 	var total_price,final_total_price,_goods_qty;
 	var cart_goods_qty=document.getElementById("cart_goods_qty");
@@ -250,7 +251,7 @@ function fn_order_all_cart_goods(){
 						   <img width="75" alt=""
 							src="${contextPath}/resources/image/btn_add_list.jpg">
 						</A><br> 
-						<a href="javascript:delete_cart_goods('${cart_id}');"> 
+						<a href="javascript:delete_cart_goods('${cart_id}');""> 
 						   <img width="75" alt=""
 							   src="${contextPath}/resources/image/btn_delete.jpg">
 					   </a>
@@ -271,7 +272,7 @@ function fn_order_all_cart_goods(){
 	
 	<table  width=80%   class="list_view" style="background:#cacaff">
 	<tbody>
-	     <tr align="center" class="fixed" >
+	     <tr  align=center  class="fixed" >
 	       <td class="fixed">총 상품수 </td>
 	       <td>총 상품금액</td>
 	       <td>  </td>
@@ -284,7 +285,7 @@ function fn_order_all_cart_goods(){
 		<tr cellpadding=40  align=center >
 			<td id="">
 			  <p id="p_totalGoodsNum">${totalGoodsNum}개 </p>
-			  <input id="h_totalGoodsNum" type="hidden" value="${totalGoodsNum}"  />
+			  <input id="h_totalGoodsNum"type="hidden" value="${totalGoodsNum}"  />
 			</td>
 	       <td>
 	          <p id="p_totalGoodsPrice">
@@ -322,13 +323,13 @@ function fn_order_all_cart_goods(){
 		</tr>
 		</tbody>
 	</table>
-	<div align="center">
+	<center>
     <br><br>	
 		 <a href="javascript:fn_order_all_cart_goods()">
 		 	<img width="75" alt="" src="${contextPath}/resources/image/btn_order_final.jpg">
 		 </a>
-		 <a href="${contextPath }/main/main.do">
+		 <a href="#">
 		 	<img width="75" alt="" src="${contextPath}/resources/image/btn_shoping_continue.jpg">
 		 </a>
-	</div>
+	<center>
 </form>	
