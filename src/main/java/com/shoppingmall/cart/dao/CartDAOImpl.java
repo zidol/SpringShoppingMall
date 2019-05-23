@@ -5,10 +5,12 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Repository;
 
 import com.shoppingmall.cart.vo.CartVO;
 import com.shoppingmall.goods.vo.GoodsVO;
 
+@Repository("cartDAO")
 public class CartDAOImpl implements CartDAO{
 	@Autowired
 	private SqlSession sqlSession;
@@ -22,7 +24,7 @@ public class CartDAOImpl implements CartDAO{
 	@Override
 	public List<GoodsVO> selectGoodsList(List<CartVO> cartList) throws DataAccessException {
 		List<GoodsVO> myGoodsList;
-		myGoodsList = sqlSession.selectList("mapper.cart.selectCounterInCart", cartList);
+		myGoodsList = sqlSession.selectList("mapper.cart.selectGoodsList", cartList);
 		return myGoodsList;
 	}
 

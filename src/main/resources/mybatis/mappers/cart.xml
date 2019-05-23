@@ -5,7 +5,7 @@
 
 	<resultMap type="cartVO" id="cartResult">
 		<id property="cart_id" column="cart_id" />
-		<result property="goods_id" column="goods_title" />
+		<result property="goods_id" column="goods_id" />
 		<result property="member_id" column="member_id" />
 		<result property="reg_date" column="reg_date" />
 		<result property="cart_goods_qty" column="cart_goods_qty" />
@@ -78,7 +78,7 @@
 		INSERT INTO CART(CART_ID
 		               , GOODS_ID
 		               , MEMBER_ID)
-	 	         VALUES(#{cart_id]
+	 	         VALUES(#{cart_id}
 	 	              , #{goods_id}
 	 	              , #{member_id})
 		]]>

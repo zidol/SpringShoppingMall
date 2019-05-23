@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,9 @@ import com.shoppingmall.cart.vo.CartVO;
 import com.shoppingmall.common.base.BaseController;
 import com.shoppingmall.member.vo.MemberVO;
 
-public class CartContollerImpl extends BaseController implements CartController{
+@Controller("cartController")
+@RequestMapping(value="/cart")
+public class CartControllerImpl extends BaseController implements CartController{
 	@Autowired
 	CartService cartService;
 	@Autowired
@@ -43,6 +46,7 @@ public class CartContollerImpl extends BaseController implements CartController{
 	@RequestMapping(value="/addGoodsInCart.do", method=RequestMethod.POST, produces="application/test; charset=utf8")
 	public @ResponseBody String addGoodsInCart(@RequestParam("goods_id")int goods_id, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		System.out.println("1");
 		HttpSession session = request.getSession();
 		memberVO = (MemberVO)session.getAttribute("memberInfo");
 		String member_id = memberVO.getMember_id();
@@ -85,7 +89,7 @@ public class CartContollerImpl extends BaseController implements CartController{
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
 		cartService.removeCartGoods(cart_id);
-		mav.setViewName("redirect:cart/myCartList.do");
+		mav.setViewName("redirect:/cart/myCartList.do");
 		return mav;
 	}
 	

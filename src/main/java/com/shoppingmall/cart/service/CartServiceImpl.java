@@ -5,11 +5,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shoppingmall.cart.dao.CartDAO;
 import com.shoppingmall.cart.vo.CartVO;
 import com.shoppingmall.goods.vo.GoodsVO;
 
+@Service("cartService")
+@Transactional(propagation=Propagation.REQUIRED)
 public class CartServiceImpl implements CartService{
 	@Autowired
 	CartDAO cartDAO;
