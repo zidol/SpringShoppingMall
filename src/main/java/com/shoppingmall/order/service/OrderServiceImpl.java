@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.shoppingmall.order.contrller.OrderDAO;
+import com.shoppingmall.order.dao.OrderDAO;
 import com.shoppingmall.order.vo.OrderVO;
+
 
 @Service("orderService")
 @Transactional(propagation=Propagation.REQUIRED)
