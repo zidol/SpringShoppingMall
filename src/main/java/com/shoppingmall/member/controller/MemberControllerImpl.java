@@ -38,10 +38,10 @@ public class MemberControllerImpl extends BaseController implements MemberContro
 			session = request.getSession();
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", memberVO);
-			System.out.println(memberVO);
 			String action = (String)session.getAttribute("action");
 			if(action != null && action.equals("/order/orderEachGoods.do")) {
 				mav.setViewName("forward:" + action);
+				System.out.println("login.do : " + action);
 			} else {
 				mav.setViewName("redirect:/main/main.do");
 			}

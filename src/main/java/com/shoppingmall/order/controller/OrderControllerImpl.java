@@ -30,6 +30,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 	@Autowired
 	OrderVO orderVO;
 	
+	// 장바구니 각각의 항목에 대한 처리, 상품 상세보기에수 구매하기에 대한 처리
 	@RequestMapping(value="/orderEachGoods.do", method= RequestMethod.POST)
 	public ModelAndView orderEachGoods(@ModelAttribute("orderVO") OrderVO _orderVO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
@@ -38,12 +39,12 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		Boolean isLogOn = (Boolean)session.getAttribute("isLogOn");
 		String action = (String)session.getAttribute("action");
 		
-		if(isLogOn==null || isLogOn) {
+		if(isLogOn==null || isLogOn) {	//로그인 하지 않았을때
 			session.setAttribute("orderInfo", _orderVO);
 			session.setAttribute("action", "/order/orderEachGoods.do");
-			return new ModelAndView("redirect:/member/loginForm.do");
-		} else {
-			if(action != null && action.equals("/order/orderEachGoods.do")) {
+			return new ModelAndView("redirect:/member/loginForm.do");//로그인 하지 않고 상세보기에서 구매하기
+		} else {	//로그인 하고 구매하기 하였을때
+			if(action != null && action.equals("/order/orderEachGoods.do")) {	
 				orderVO = (OrderVO)session.getAttribute("orderInfo");
 				session.removeAttribute("action");
 			} else {
@@ -63,10 +64,11 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		session.setAttribute("orderer", memberInfo);
 		return mav;
 	}
-
+	
+	// 전체 장바구니 항목에 대한 요청 매핑
 	@RequestMapping(value="/orderAllCartGoods.do", method=RequestMethod.POST)
-	public ModelAndView orderAllCartGoods(@RequestParam("cart_goods_qty")String[] cart_goods_qty, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ModelAndView orderAllCartGoods(@RequestParam("cart_goods_qty")String[] cart_goods_qty
+										, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = (String)request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
 		HttpSession session = request.getSession();
@@ -100,7 +102,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		return mav;
 	}
 
-	@RequestMapping(value="/payToroderGoods.do", method=RequestMethod.POST)
+	@RequestMapping(value="/payToOrderGoods.do", method=RequestMethod.POST)
 	public ModelAndView payToOrderGoods(@RequestParam Map<String, String> receiverMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String viewName = (String) request.getAttribute("viewName");
@@ -134,7 +136,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 			orderVO.setCard_com_name(receiverMap.get("card_com_name"));
 			orderVO.setCard_pay_month(receiverMap.get("card_pay_month"));
 			orderVO.setPay_orderer_hp(receiverMap.get("pay_orderer_hp"));
-			orderVO.setOrderer_hp("orderer_hp");
+			orderVO.setOrderer_hp(orderer_hp);
 			myOrderList.set(i, orderVO);
 		}
 		

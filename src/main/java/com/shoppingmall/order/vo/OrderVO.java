@@ -35,9 +35,9 @@ public class OrderVO {
 	private String orderer_hp;
 
 	// orders 테이블에 없는 필드 추가
-	private int total_goods_price;
-	private int cart_goods_qty;
-	private String final_total_price;
+	private int total_goods_price;		// 전체 장바구니 금액(배송비 포함X)
+	private int cart_goods_qty;			// 전체 장바구니 금액(배송비 포함O)
+	private String final_total_price;	// 전체 장바구니 상품 수령 
 	private int goods_qty;
 
 	public int getOrder_seq_num() {
