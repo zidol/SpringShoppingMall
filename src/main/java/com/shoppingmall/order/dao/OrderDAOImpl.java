@@ -1,4 +1,4 @@
-package com.shoppingmall.order.contrller;
+package com.shoppingmall.order.dao;
 
 import java.util.ArrayList;
 import java.util.List;
