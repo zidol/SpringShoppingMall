@@ -513,13 +513,14 @@ function fn_process_pay_order(){
 				<td>예상적립금</td>
 				<td>주문금액합계</td>
 			</tr>
+			<c:forEach var="item" items="${myOrderList }">
 			<tr>
-				<c:forEach var="item" items="${myOrderList }">
+				
 					<td class="goods_image">
-					  <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
 					    <img width="75" alt=""  src="${contextPath}/thumbnails.do?goods_id=${item.goods_id}&fileName=${item.goods_fileName}">
-					    <input   type="hidden" id="h_goods_id" name="h_goods_id" value="${item.goods_id }" />
-					    <input   type="hidden" id="h_goods_fileName" name="h_goods_fileName" value="${item.goods_fileName }" />
+					    <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
+					    <input   type="hidden" id="h_goods_id" name="h_goods_id" value="${item.goods_id}" />
+					    <input   type="hidden" id="h_goods_fileName" name="h_goods_fileName" value="${item.goods_fileName}" />
 					  </a>
 					</td>
 					<td>
@@ -640,19 +641,19 @@ function fn_process_pay_order(){
 						value="${orderer.zipcode }"> 
 						<a href="javascript:execDaumPostcode()">우편번호검색</a> <br>
 						<p>
-							지번 주소:<br>
-							<input type="text" id="roadAddress" name="roadAddress" size="50" value="${orderer.roadAddress }" /><br>
-							<br> 도로명 주소: 
+							도로명 주소:<br>
+							<input type="text" id="roadAddress" name="roadAddress" size="50" value="${orderer.road_address }" /><br>
+							<br> 지번 주소: 
 							   <input type="text" id="jibunAddress" name="jibunAddress" size="50"
-								              value="${orderer.jibunAddress }" /><br>
+								              value="${orderer.jibun_address }" /><br>
 							<br> 나머지 주소: 
 							   <input type="text" id="namujiAddress"  name="namujiAddress" size="50"
-								     value="${orderer.namujiAddress }" /> 
+								     value="${orderer.detail_address }" /> 
 						</p> 
 						 <input type="hidden" id="h_zipcode" name="h_zipcode" value="${orderer.zipcode }" /> 
-						 <input type="hidden"  id="h_roadAddress" name="h_roadAddress"  value="${orderer.roadAddress }" /> 
-						 <input type="hidden"  id="h_jibunAddress" name="h_jibunAddress" value="${orderer.jibunAddress }" /> 
-						 <input type="hidden"  id="h_namujiAddress" name="h_namujiAddress" value="${orderer.namujiAddress }" />
+						 <input type="hidden"  id="h_roadAddress" name="h_roadAddress"  value="${orderer.road_address }" /> 
+						 <input type="hidden"  id="h_jibunAddress" name="h_jibunAddress" value="${orderer.jibun_address }" /> 
+						 <input type="hidden"  id="h_namujiAddress" name="h_namujiAddress" value="${orderer.detail_address }" />
 					</td>
 				</tr>
 				<tr class="dot_line">
@@ -666,8 +667,8 @@ function fn_process_pay_order(){
 					<td class="fixed_join">선물 포장</td>
 					<td><input type="radio" id="gift_wrapping" name="gift_wrapping" value="yes">예
 						&nbsp;&nbsp;&nbsp; <input type="radio"  id="gift_wrapping" name="gift_wrapping" checked value="no">아니요</td>
-				</td>
-			</tboby>
+				</tr>
+			</tbody>
 		</table>
 	</div>
 	<div >

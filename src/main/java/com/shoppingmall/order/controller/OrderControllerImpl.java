@@ -38,8 +38,8 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		HttpSession session = request.getSession();
 		Boolean isLogOn = (Boolean)session.getAttribute("isLogOn");
 		String action = (String)session.getAttribute("action");
-		
-		if(isLogOn==null || isLogOn) {	//로그인 하지 않았을때
+		System.out.println("1"+isLogOn);
+		if(isLogOn==null || isLogOn==false) {	//로그인 하지 않았을때
 			session.setAttribute("orderInfo", _orderVO);
 			session.setAttribute("action", "/order/orderEachGoods.do");
 			return new ModelAndView("redirect:/member/loginForm.do");//로그인 하지 않고 상세보기에서 구매하기
@@ -54,8 +54,9 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 		
 		String viewName = (String)request.getAttribute("viewName");
 		ModelAndView mav = new ModelAndView(viewName);
-		
+		System.out.println("2"+viewName);
 		List myOrderList = new ArrayList<OrderVO>();
+		System.out.println("2"+orderVO.toString());
 		myOrderList.add(orderVO);
 		
 		MemberVO memberInfo = (MemberVO)session.getAttribute("memberInfo");
@@ -93,6 +94,7 @@ public class OrderControllerImpl extends BaseController implements OrderControll
 					_orderVO.setGoods_sales_price(goods_sales_price);
 					_orderVO.setGoods_fileName(goods_fileName);
 					_orderVO.setOrder_goods_qty(Integer.parseInt(cart_goods[1]));
+					myOrderList.add(_orderVO);
 					break;
 				}
 			}
