@@ -24,6 +24,7 @@ public class CartDAOImpl implements CartDAO{
 	@Override
 	public List<GoodsVO> selectGoodsList(List<CartVO> cartList) throws DataAccessException {
 		List<GoodsVO> myGoodsList;
+		System.out.println(cartList.toString());
 		myGoodsList = sqlSession.selectList("mapper.cart.selectGoodsList", cartList);
 		return myGoodsList;
 	}

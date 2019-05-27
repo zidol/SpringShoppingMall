@@ -43,6 +43,7 @@
 			SELECT *
 			  FROM CART
 			 WHERE MEMBER_ID=#{member_id}
+			 order by cart_id
 		]]>
 	</select>
 	
@@ -53,14 +54,16 @@
 		     , I.FILENAME 
 		  FROM GOODS G
 		     , GOODS_IMAGE I
+		     , cart c
 		 WHERE G.GOODS_ID = I.GOODS_ID
+		 and i.goods_id = c.goods_id
 		   AND I.FILETYPE = 'main_image'
 		   AND G.GOODS_ID IN
 		]]>
 		<foreach item="item" collection="list" open="(" separator="," close=")">
 			#{item.goods_id}
 		</foreach>
-		 ORDER BY G.GOODS_ENTER_DATE
+		 order by cart_id
 	</select>
 	
 	<!-- 상품아이디와 회원아디로 장바구니 유무 조회 -->
