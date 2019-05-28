@@ -453,7 +453,7 @@ function fn_process_pay_order(){
     i_pay_method.name="pay_method";
     i_card_com_name.name="card_com_name";
     i_card_pay_month.name="card_pay_month";
-    i_pay_orderer_hp_num.name="pay_orderer_hp_num";
+    i_pay_orderer_hp_num.name="pay_orderer_hp";
   
     i_receiver_name.value=receiver_name;
     i_receiver_hp1.value=hp1;
@@ -463,7 +463,7 @@ function fn_process_pay_order(){
     i_receiver_tel1.value=tel1;
     i_receiver_tel2.value=tel2;
     i_receiver_tel3.value=tel3;
-    ;
+    
     i_delivery_address.value=delivery_address;
     i_delivery_message.value=delivery_message;
     i_delivery_method.value=delivery_method;
@@ -525,12 +525,12 @@ function fn_process_pay_order(){
 					</td>
 					<td>
 					  <h2>
-					     <a href="${pageContext.request.contextPath}/goods/goods.do?command=goods_detail&goods_id=${item.goods_id }">${item.goods_title }</A>
+					     <a href="${pageContext.request.contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">${item.goods_title }</A>
 					      <input   type="hidden" id="h_goods_title" name="h_goods_title" value="${item.goods_title }" />
 					  </h2>
 					</td>
 					<td>
-					  <h2>${item.order_goods_qty }개<h2>
+					  <h2>${item.order_goods_qty }개</h2>
 					    <input   type="hidden" id="h_order_goods_qty" name="h_order_goods_qty" value="${item.order_goods_qty}" />
 					</td>
 					<td><h2>${item.goods_sales_price}원 (10% 할인)</h2></td>
@@ -631,9 +631,11 @@ function fn_process_pay_order(){
 							<option value="070">070</option>
 					</select> - <input size="10px" type="text" id="tel2" name="tel2" value="${orderer.tel2 }"> - <input size="10px" type="text" id="tel3" name="tel3" value="${orderer.tel3 }">
 					</td>
+					<td style="">
 					<input type="hidden" id="h_tel1" name="h_tel1" value="${orderer.tel1 }" />
 					<input type="hidden" id="h_tel2" name="h_tel2"	value="${orderer.tel2 }" />
 					<input type="hidden" id="h_tel3" name="h_tel3"value="${orderer.tel3 }" />
+					</td>
 				</tr>
 				<tr class="dot_line">
 					<td class="fixed_join">주소</td>
