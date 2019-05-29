@@ -74,13 +74,13 @@
 			      <if test=" member_gender!='' and member_gender!=null">
 			         member_gender=#{member_gender},
 			      </if>
-			       <if test=" member_birth_y!='' and member_birth_y!=null">
+			       <if test=" birth_year!='' and birth_year!=null">
 			         birth_year=#{birth_year},
 			      </if>
-			      <if test=" member_birth_m!='' and member_birth_m!=null">
+			      <if test=" birth_month!='' and birth_month!=null">
 			         birth_month=#{birth_month},
 			      </if>
-			      <if test=" member_birth_d!='' and member_birth_d!=null">
+			      <if test=" birth_day!='' and birth_day!=null">
 			         birth_day=#{birth_day},
 			      </if>
 			      <if test=" tel1!='' and tel1!=null">
@@ -101,7 +101,7 @@
 			      <if test=" hp3!='' and hp3!=null">
 			         hp3=#{hp3},
 			      </if>
-			      <if test=" smssts_yn!='' and smssts_yn!=null">
+			      <if test=" sms_yn!='' and sms_yn!=null">
 			         sms_yn=#{sms_yn},
 			      </if>
 			      <if test=" email1!='' and email1!=null">
@@ -110,19 +110,19 @@
 			      <if test=" email2!='' and email2!=null">
 			         email2=#{email2},
 			      </if>
-			      <if test=" emailsts_yn!='' and emailsts_yn!=null">
+			      <if test=" email_yn!='' and email_yn!=null">
 			         email_yn=#{email_yn},
 			      </if>
 			      <if test=" zipcode!='' and zipcode!=null">
 			         zipcode=#{zipcode},
 			      </if>
-			      <if test=" roadAddress!='' and roadAddress!=null">
+			      <if test=" road_address!='' and road_address!=null">
 			         road_address=#{road_address},
 			      </if>			     
-			      <if test=" jibunAddress!='' and jibunAddress!=null">
+			      <if test=" jibun_address!='' and jibun_address!=null">
 			         jibun_address=#{jibun_address},
 			      </if>
-			      <if test=" namujiAddress!='' and namujiAddress!=null">
+			      <if test=" detail_address!='' and detail_address!=null">
 			         detail_address=#{detail_address}
 			      </if>
 			   </set>
