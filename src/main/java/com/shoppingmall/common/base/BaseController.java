@@ -63,7 +63,7 @@ public abstract class BaseController {
 		return mav;
 	}
 	
-	protected String clacSearchPeriod(String fixedSearchPeriod) {
+	protected String calcSearchPeriod(String fixedSearchPeriod) {
 		String beginDate = null;
 		String endDate = null;
 		String endYear = null;

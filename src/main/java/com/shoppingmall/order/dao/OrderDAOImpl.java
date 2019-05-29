@@ -29,7 +29,7 @@ public class OrderDAOImpl implements OrderDAO{
 		for(int i = 0; i < myOrderList.size(); i++) {
 			OrderVO orderVO = (OrderVO)myOrderList.get(i);
 			orderVO.setOrder_id(order_id);
-			sqlSession.insert("mapper.order.insertNewOrder", order_id);
+			sqlSession.insert("mapper.order.insertNewOrder", orderVO);
 		}
 	}
 
