@@ -52,7 +52,7 @@
 
 	<select id="selectMyOrderInfo" resultMap="orderGoodsResult"   parameterType="String"  >
 	    <![CDATA[
-		    select * from t_shopping_order
+		    select * from orders
             where order_id=#{order_id}
     	]]>
 	</select>

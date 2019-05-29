@@ -43,7 +43,7 @@
 			SELECT *
 			  FROM CART
 			 WHERE MEMBER_ID=#{member_id}
-			 order by cart_id
+			 order by cart_id desc
 		]]>
 	</select>
 	
@@ -63,7 +63,7 @@
 		<foreach item="item" collection="list" open="(" separator="," close=")">
 			#{item.goods_id}
 		</foreach>
-		 order by cart_id
+		 order by cart_id desc
 	</select>
 	
 	<!-- 상품아이디와 회원아디로 장바구니 유무 조회 -->
@@ -80,10 +80,12 @@
 		<![CDATA[
 		INSERT INTO CART(CART_ID
 		               , GOODS_ID
-		               , MEMBER_ID)
+		               , MEMBER_ID
+		               , CART_GOODS_QTY)
 	 	         VALUES(#{cart_id}
 	 	              , #{goods_id}
-	 	              , #{member_id})
+	 	              , #{member_id}
+	 	              , #{cart_goods_qty})
 		]]>
 	</insert>
 
