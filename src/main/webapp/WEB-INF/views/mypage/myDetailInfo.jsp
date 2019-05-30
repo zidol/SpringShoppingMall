@@ -98,7 +98,6 @@ function fn_modify_member_info(attribute){
 	// alert(member_id);
 	// alert("mod_type:"+mod_type);
 		var frm_mod_member=document.frm_mod_member;
-		console.log(frm_mod_member.hp1.value);
 		if(attribute=='member_pw'){
 			value=frm_mod_member.member_pw.value;
 			//alert("member_pw:"+value);
@@ -138,14 +137,14 @@ function fn_modify_member_info(attribute){
 			}
 			
 			//alert("수정 년:"+value_y+","+value_m+","+value_d);
-			for(var i=0; member_birth_gn.length;i++){
+			/* for(var i=0; member_birth_gn.length;i++){
 			 	if(member_birth_gn[i].checked){
 					value_gn=member_birth_gn[i].value;
 					break;
 				} 
-			}
+			} */
 			//alert("생년 양음년 "+value_gn);
-			value=+value_y+","+value_m+","+value_d+","+value_gn;
+			value=+value_y+","+value_m+","+value_d;
 		}else if(attribute=='tel'){
 			var tel1=frm_mod_member.tel1;
 			var tel2=frm_mod_member.tel2;
@@ -159,7 +158,7 @@ function fn_modify_member_info(attribute){
 			}
 			value_tel2=tel2.value;
 			value_tel3=tel3.value;
-			value=value_tel1+","+value_tel2+", "+value_tel3;
+			value=value_tel1+","+value_tel2+","+value_tel3;
 		}else if(attribute=='hp'){
 			var hp1=frm_mod_member.hp1;
 			var hp2=frm_mod_member.hp2;
@@ -178,7 +177,11 @@ function fn_modify_member_info(attribute){
 			value=value_hp1+","+value_hp2+", "+value_hp3+","+value_smssts_yn;
 		}else if(attribute=='email'){
 			var email1=frm_mod_member.email1;
-			var email2=frm_mod_member.email2;
+			if(frm_mod_member.select_email2.value == 'non') {
+				var email2=frm_mod_member.email2;
+			} else  {
+				var email2=frm_mod_member.select_email2;
+			}
 			var emailsts_yn=frm_mod_member.emailsts_yn;
 			
 			value_email1=email1.value;
@@ -191,14 +194,13 @@ function fn_modify_member_info(attribute){
 			var roadAddress=frm_mod_member.roadAddress;
 			var jibunAddress=frm_mod_member.jibunAddress;
 			var namujiAddress=frm_mod_member.namujiAddress;
-			
+			console.log(roadAddress.value)
 			value_zipcode=zipcode.value;
 			value_roadAddress=roadAddress.value;
 			value_jibunAddress=jibunAddress.value;
 			value_namujiAddress=namujiAddress.value;
 			value=value_zipcode+","+value_roadAddress+","+value_jibunAddress+","+value_namujiAddress;
 		}
-		console.log(attribute);
 	 
 		$.ajax({
 			type : "post",
@@ -221,7 +223,7 @@ function fn_modify_member_info(attribute){
 			},
 			complete : function(data, textStatus) {
 				//alert("작업을완료 했습니다");
-				
+				document.location.href="${contextPath}/mypage/myDetailInfo.do";
 			}
 		}); //end ajax
 }
