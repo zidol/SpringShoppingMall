@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.admin.goods">
+	<!-- ResultMap 정의 -->
+	<!-- GoodsVO, GOODS Table 매핑-->
 	<resultMap type="goodsVO" id="goodsResult">
 		<id property="goods_id" column="goods_id" />
 		<result property="goods_sort" column="goods_sort" />
@@ -26,7 +28,7 @@
 		<result property="goods_fileName" column="filename" 
 		javaType="java.lang.String" jdbcType="CLOB"/>
 	</resultMap>
-	
+	<!-- ImageFileVO, GOODS_IMAGE Table 매핑-->
 	<resultMap type="imageFileVO" id="imageResult">
 		<id property="image_id" column="image_id" />
 		<result property="goods_id" column="goods_id" />
@@ -36,6 +38,7 @@
 		<!-- <result property="reg_date" column="reg_date" /> -->
 	</resultMap>
 	
+	<!-- OrderVO, ORDERS Table 매핑 -->
 	<resultMap id="orderGoodsResult" type="orderVO">
 		<result property="order_id" column="order_id" />
 		<result property="member_id" column="member_id" />
@@ -72,6 +75,7 @@
 		<result property="goods_fileName" column="goods_fileName" />
 	</resultMap>
 	
+	<!-- GOODS Ttable 상품 등록, 일련 번호 시퀀스를 활용, 미리 생성 해서 넣어 줌 -->
 	<insert id="insertNewGoods" parameterType="java.util.Map"  >
 	    <selectKey resultType="String" keyProperty="goods_id" order="BEFORE">
 	    	SELECT SEQ_GOODS_ID.NEXTVAL FROM DUAL
@@ -118,6 +122,7 @@
     	]]>
 	</insert>
 	
+	<!-- GOODS_IMAGE Table 상품이미지 등록 , 이미지 별로 시퀀스 생성 -->
 	<insert id="insertGoodsImageFile" parameterType="imageFileVO">
 		<selectKey resultType="int" keyProperty="image_id" order="BEFORE">
 			SELECT SEQ_IMAGE_ID.NEXTVAL FROM DUAL
@@ -132,21 +137,14 @@
 								   ,#{goods_id}
 								   ,#{fileName}
 								   ,#{fileType}
-								   ,#{reg_id})
-								   
+								   ,#{reg_id})					   
 		]]>
 	</insert>
-	
+	<!-- 상품 확인 페이지 (페이징 처리, 상품 입고일자로 검색) -->
 	<select id="selectNewGoodsList" resultMap="goodsResult" parameterType="java.util.Map">
 		<![CDATA[
 			SELECT * FROM (SELECT ROWNUM AS RECNUM
-					     , GOODS_ID
-					     , GOODS_TITLE
-					     , GOODS_WRITER
-					     , GOODS_PUBLISHER
-					     , GOODS_SALES_PRICE
-					     , TO_CHAR(GOODS_ENTER_DATE, 'YYYY-MM-DD') AS GOODS_ENTER_DATE
-					     , TO_CHAR(GOODS_PUBLISHED_DATE, 'YYYY-MM-DD') AS GOODS_PUBLISHED_DATE
+					     , t.*
 					  FROM (SELECT GOODS_ID
 							     , GOODS_TITLE
 							     , GOODS_WRITER
@@ -156,11 +154,12 @@
 							     , TO_CHAR(GOODS_PUBLISHED_DATE, 'YYYY-MM-DD') AS GOODS_PUBLISHED_DATE
 							  FROM GOODS
 							 WHERE TO_CHAR(GOODS_ENTER_DATE, 'YYYY-MM-DD') BETWEEN #{beginDate} and #{endDate}
-						  ORDER BY GOODS_ENTER_DATE DESC))
+						  ORDER BY GOODS_ENTER_DATE DESC)t)
 					WHERE RECNUM BETWEEN (#{section}-1)*100 + (#{pageNum}-1)*10+1 AND (#{section}-1)*100 + (#{pageNum})*10 	
 		]]>
 	</select>
 	
+	<!-- 주문 상품 확인 페이지 (페이징 처리, 결제시간, 검색키워드 추가(주문자ID, 주문자 이름, 주문자 휴대폰 번호)) -->
 	<select id="selectOrderGoodsList" resultMap="orderGoodsResult" parameterType="java.util.Map">
 			SELECT * FROM (SELECT ROWNUM AS RECNUM
 			                    , T.*
@@ -177,12 +176,12 @@
 			                          AND ORDERER_HP=#{search_word}
 			                       </if>
 			                       ORDER BY PAY_ORDER_TIME DESC
-			                       ) T
-			               )
+			                       ) T)
 			         WHERE RECNUM BETWEEN (#{section}-1)*100 + (#{pageNum}-1)*10+1 and (#{section}-1)*100 + (#{pageNum})*10
 
 	</select>
 	
+	<!-- 상품 상세 정보확인 -->
 	<select id="selectGoodsDetail" resultMap="goodsResult" parameterType="String">
 		<![CDATA[
 			SELECT G.*
@@ -196,6 +195,7 @@
 		]]>
 	</select>
 	
+	<!-- 이미지 정보 확인 -->
 	<select id="selectGoodsImageFileList" resultMap="imageResult" parameterType="String">
 		<![CDATA[
 			SELECT * 
@@ -266,15 +266,17 @@
 		WHERE GOODS_ID = #{goods_id}
 	</update>
 	
+	<!-- 상품이미지 테이블의 상품 이미지 수정 -->
 	<update id="updateGoodsImage" parameterType="imageFileVO">
 		<![CDATA[
 			UPDATE GOODS_IMAGE
-			   SET FINENAME=#{fileNMame}
+			   SET FILENAME=#{fileName}
 			 WHERE GOODS_ID=#{goods_id}
 			   AND IMAGE_ID=#{image_id}
 		]]>
 	</update>
 	
+	<!-- 상품이미지 테이블에서 상품 이미지를 삭제 -->
 	<delete id="deleteGoodsImage" parameterType="String">
 		<![CDATA[
 			DELETE FORM GOODS_IMAGE
@@ -282,14 +284,15 @@
 		]]>
 	</delete>
 	
+	<!-- 주문테이블 주문 아이디 조건으로 주문 상태, 주소를 변경 -->
 	<update id="updateOrderGoods" parameterType="java.util.HashMap">
 		UPDATE ORDERS
 			<set>
 				<if test="delivery_state!='' and delivery_state!=null">
-					DELEVERY_STATE=#{delivery_state},
+					DELIVERY_STATE=#{delivery_state},
 				</if>
 				<if test="delivery_address!='' and delivery_address!=null">
-					DELEVERY_ADDRESS=#{delivery_address},
+					DELIVERY_ADDRESS=#{delivery_address},
 				</if>
 			</set>
 		WHERE ORDER_ID=#{order_id}
