@@ -81,23 +81,23 @@ public abstract class BaseController {
 		endDate = endYear + "-" + endMonth + "-" + endDay;
 		
 		if(fixedSearchPeriod == null) {
-			cal.add(Calendar.MONTH, -3);
+			cal.add(Calendar.MONTH, -4);
 		} else if(fixedSearchPeriod.equals("one_week")) {
 			cal.add(Calendar.DAY_OF_YEAR, -7);
 		} else if(fixedSearchPeriod.equals("two_week")) {
 			cal.add(Calendar.DAY_OF_YEAR, -14);
 		} else if(fixedSearchPeriod.equals("one_month")) {
-			cal.add(Calendar.MONTH, -0);
-		} else if(fixedSearchPeriod.equals("two_month")) {
 			cal.add(Calendar.MONTH, -1);
-		} else if(fixedSearchPeriod.equals("three_month")) {
+		} else if(fixedSearchPeriod.equals("two_month")) {
 			cal.add(Calendar.MONTH, -2);
-		} else if(fixedSearchPeriod.equals("four_month")) {
+		} else if(fixedSearchPeriod.equals("three_month")) {
 			cal.add(Calendar.MONTH, -3);
+		} else if(fixedSearchPeriod.equals("four_month")) {
+			cal.add(Calendar.MONTH, -4);
 		}
 		
 		beginYear = Integer.toString(cal.get(Calendar.YEAR));
-		beginMonth = df.format(cal.get(Calendar.MONTH));
+		beginMonth = df.format(cal.get(Calendar.MONTH)+1);
 		beginDay = df.format(cal.get(Calendar.DATE));
 		beginDate = beginYear + "-" + beginMonth + "-" + beginDay;
 		
