@@ -248,7 +248,7 @@ function  calcPeriod(search_period){
              <td colspan=8 class="fixed">
                  <c:forEach   var="page" begin="1" end="10" step="1" >
 			         <c:if test="${section >1 && page==1 }">
-			          <a href="${contextPath}/admin/goods/adminGoodsMain.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp; prev</a>
+			          <a href="${contextPath}/admin/goods/adminGoodsMain.do?section=${section-1}&pageNum=${(section-1)*10 }">&nbsp; prev</a>
 			         </c:if>
 			          <a href="${contextPath}/admin/goods/adminGoodsMain.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
 			         <c:if test="${page ==10 }">

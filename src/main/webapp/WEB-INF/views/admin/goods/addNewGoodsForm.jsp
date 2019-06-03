@@ -181,14 +181,14 @@
 		</div>
 	</div>
 	<div class="clear"></div>
-<center>	
+<div align="center">	
 	 <table>
-	 <tr>
-			  <td align=center>
-				  <input  type="submit" value="상품 등록하기"> 
-			  </td>
-			</tr>
+		<tr>
+		  <td align=center>
+			  <input  type="submit" value="상품 등록하기"> 
+		  </td>
+		</tr>
 	 </table>
-</center>	 
+</div>	 
 </div>
 </form>	 

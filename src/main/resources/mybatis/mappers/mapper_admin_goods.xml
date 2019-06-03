@@ -23,10 +23,9 @@
 		<result property="goods_writer_intro" column="goods_writer_intro" />
 		<!-- <result property="goods_publisher_comment" column="goods_publisher_comment" /> -->
 		<!-- <result property="goods_recommendation" column="goods_recommendation" /> -->
-		<result property="goods_contents_order" column="goods_contents_order" />
+		<result property="goods_contents_order" column="goods_contents_order" javaType="java.lang.String" jdbcType="CLOB" />
 		<!-- <result property="goods_enter_date " column="goods_enter_date" /> -->
-		<result property="goods_fileName" column="filename" 
-		javaType="java.lang.String" jdbcType="CLOB"/>
+		<result property="goods_fileName" column="filename" />
 	</resultMap>
 	<!-- ImageFileVO, GOODS_IMAGE Table 매핑-->
 	<resultMap type="imageFileVO" id="imageResult">
@@ -182,7 +181,7 @@
 	</select>
 	
 	<!-- 상품 상세 정보확인 -->
-	<select id="selectGoodsDetail" resultMap="goodsResult" parameterType="String">
+	<select id="selectGoodsDetail" resultMap="goodsResult" parameterType="int">
 		<![CDATA[
 			SELECT G.*
 			     , TO_CHAR(G.GOODS_PUBLISHED_DATE, 'YYYY-MM-DD') AS GOODS_PUBLISHED_DATE
@@ -196,7 +195,7 @@
 	</select>
 	
 	<!-- 이미지 정보 확인 -->
-	<select id="selectGoodsImageFileList" resultMap="imageResult" parameterType="String">
+	<select id="selectGoodsImageFileList" resultMap="imageResult" parameterType="int">
 		<![CDATA[
 			SELECT * 
 			  FROM GOODS_IMAGE
@@ -229,11 +228,14 @@
 				<if test=" goods_sales_price!='' and goods_sales_price!=null">
 					GOODS_SALES_PRICE=#{goods_sales_price},
 				</if>
+				<if test=" goods_published_date!='' and goods_published_date!=null">
+			        goods_published_date=#{goods_published_date},
+		       </if>
 				<if test=" goods_point!='' and goods_point!=null">
 					GOODS_POINT=#{goods_point},
 				</if>
-				<if test=" goods_page_total!='' and goods_page_total!=null">
-					GOODS_PAGE_TOTAL=#{goods_page_total},
+				<if test=" goods_total_page!='' and goods_total_page!=null">
+					GOODS_TOTAL_PAGE=#{goods_total_page},
 				</if>
 				<if test=" goods_isbn!='' and goods_isbn!=null">
 					GOODS_ISBN=#{goods_isbn},
