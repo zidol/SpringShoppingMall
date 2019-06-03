@@ -32,6 +32,7 @@ import com.shoppingmall.member.vo.MemberVO;
 @RequestMapping(value="/admin/goods")
 public class AdminGoodsControllerImpl extends BaseController implements AdminGoodsController{
 	private static final String CURR_IMAGE_REPO_PATH = "C:\\shopping\\file_repo";
+//	private static final String CURR_IMAGE_REPO_PATH = "/Users/zidol/Desktop/file_repo";
 	@Autowired
 	AdminGoodsService adminGoodsService;
 
@@ -85,9 +86,10 @@ public class AdminGoodsControllerImpl extends BaseController implements AdminGoo
 	}
 
 	@RequestMapping(value="/addNewGoods.do", method = {RequestMethod.POST})
-	public ResponseEntity addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse reponse)
+	public ResponseEntity addNewGoods(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
 			throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=UTF-8");
 		String imageFileName = null;
 		
 		Map newGoodsMap = new HashMap();
@@ -100,6 +102,7 @@ public class AdminGoodsControllerImpl extends BaseController implements AdminGoo
 		
 		HttpSession session = multipartRequest.getSession();
 		MemberVO memberVO = (MemberVO)session.getAttribute("memberInfo");
+		System.out.println(memberVO.getMember_id());
 		String reg_id = memberVO.getMember_id();
 		
 		List<ImageFileVO>imageFileList = upload(multipartRequest);
@@ -124,9 +127,9 @@ public class AdminGoodsControllerImpl extends BaseController implements AdminGoo
 				}
 			}
 			message = "<script>";
-			message += "alert('성공적으로 입력 하였습니다')";
+			message += "alert('성공적으로 입력 하였습니다');";
 			message += "location.href='" + multipartRequest.getContextPath() + "/admin/goods/addNewGoodsForm.do';";
-			message += "</script>";
+			message += ("</script>");
 		} catch (Exception e) {
 			if(imageFileList != null && imageFileList.size() != 0) {
 				for(ImageFileVO imageFileVO : imageFileList) {
@@ -136,9 +139,9 @@ public class AdminGoodsControllerImpl extends BaseController implements AdminGoo
 				}
 			}
 			message = "<script>";
-			message += "alert('등록 실패 하였습니다')";
+			message += "alert('등록 실패 하였습니다');";
 			message += "location.href='" + multipartRequest.getContextPath() + "/admin/goods/addNewGoodsForm.do';";
-			message += "</script>";
+			message += ("</script>");
 			e.printStackTrace();
 		}
 		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);

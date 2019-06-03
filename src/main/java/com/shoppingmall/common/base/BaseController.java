@@ -20,6 +20,7 @@ import com.shoppingmall.goods.vo.ImageFileVO;
 
 public abstract class BaseController {
 	private static final String CURR_IMAGE_REPO_PATH = "C:\\shopping\\file_repo";
+//	private static final String CURR_IMAGE_REPO_PATH = "/Users/zidol/Desktop/file_repo";
 	
 	protected List<ImageFileVO> upload(MultipartHttpServletRequest multipartRequest) throws Exception {
 		List<ImageFileVO> fileList = new ArrayList<ImageFileVO>();
