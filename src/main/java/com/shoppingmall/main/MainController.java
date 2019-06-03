@@ -27,18 +27,17 @@ public class MainController extends BaseController{
 	
 	@RequestMapping(value="/main/main.do", method= {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("controller1");
 		HttpSession session;
 		ModelAndView mav = new ModelAndView();
 		String viewName= (String)request.getAttribute("viewName");
 		mav.setViewName(viewName);
-		System.out.println("controller2");
+		
 		session = request.getSession();
 		session.setAttribute("side_menu", "user");
-		System.out.println("controller3");
+
 		Map<String, List<GoodsVO>>goodsMap = goodsService.listGoods();
 		mav.addObject("goodsMap", goodsMap);
-		System.out.println(mav);
+		
 		return mav;
 	}
 }

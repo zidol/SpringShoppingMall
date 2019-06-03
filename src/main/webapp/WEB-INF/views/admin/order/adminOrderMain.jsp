@@ -48,15 +48,27 @@ function search_order_history(search_period){
 	i_beginDate.value=beginDate;
 	i_endDate.name="endDate";
 	i_endDate.value=endDate;
+	alert(i_beginDate.value +"," + i_endDate.value);
 	
     formObj.appendChild(i_beginDate);
     formObj.appendChild(i_endDate);
+    document.body.appendChild(formObj); 
+    formObj.method="post";
+    formObj.action="${contextPath}/admin/order/adminOrderMain.do";
+    formObj.submit();
+}
+
+function search_order_list(fixeSearchPeriod){
+	var formObj=document.createElement("form");
+	var i_fixedSearch_period = document.createElement("input");
+	i_fixedSearch_period.name="fixedSearchPeriod";
+	i_fixedSearch_period.value=fixeSearchPeriod;
+    formObj.appendChild(i_fixedSearch_period);
     document.body.appendChild(formObj); 
     formObj.method="get";
     formObj.action="${contextPath}/admin/order/adminOrderMain.do";
     formObj.submit();
 }
-
 
 function  calcPeriod(search_period){
 	var dt = new Date();
@@ -224,8 +236,8 @@ function fn_detail_search(){
 	endYear=frm_delivery_list.endYear.value;
 	endMonth=frm_delivery_list.endMonth.value;
 	endDay=frm_delivery_list.endDay.value;
-	search_type=frm_delivery_list.s_search_type.value;
-	search_word=frm_delivery_list.t_search_word.value;
+	search_type=frm_delivery_list.s_search_type.value; //콤보박스 값
+	search_word=frm_delivery_list.t_search_word.value; //input tag 값
 
 	var formObj=document.createElement("form");
 	var i_command = document.createElement("input");
@@ -258,7 +270,7 @@ function fn_detail_search(){
     formObj.appendChild(i_search_word);
     document.body.appendChild(formObj); 
     formObj.method="post";
-    formObj.action="${contextPath}/admin/order/detailOrder.do";
+    formObj.action="${contextPath}/admin/order/orderDetail.do";
     formObj.submit();
     //alert("submit");
 	
@@ -314,25 +326,25 @@ function fn_detail_search(){
 					      </c:choose>
 					    </c:forEach>	
 					</select>일  &nbsp;이전&nbsp;&nbsp;&nbsp;&nbsp; 
-					<a href="javascript:search_order_history('today')">
+					<a href="javascript:search_order_list('today')">
 					   <img   src="${contextPath}/resources/image/btn_search_one_day.jpg">
 					</a>
-					<a href="javascript:search_order_history('one_week')">
+					<a href="javascript:search_order_list('one_week')">
 					   <img   src="${contextPath}/resources/image/btn_search_1_week.jpg">
 					</a>
-					<a href="javascript:search_order_history('two_week')">
+					<a href="javascript:search_order_list('two_week')">
 					   <img   src="${contextPath}/resources/image/btn_search_2_week.jpg">
 					</a>
-					<a href="javascript:search_order_history('one_month')">
+					<a href="javascript:search_order_list('one_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_1_month.jpg">
 					</a>
-					<a href="javascript:search_order_history('two_month')">
+					<a href="javascript:search_order_list('two_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_2_month.jpg">
 					</a>
-					<a href="javascript:search_order_history('three_month')">
+					<a href="javascript:search_order_list('three_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_3_month.jpg">
 					</a>
-					<a href="javascript:search_order_history('four_month')">
+					<a href="javascript:search_order_list('four_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_4_month.jpg">
 					</a>
 					&nbsp;까지 조회

@@ -20,9 +20,7 @@ public class GoodsDAOImpl  implements GoodsDAO{
 
 	@Override
 	public List<GoodsVO> selectGoodsList(String goodsStatus ) throws DataAccessException {
-		System.out.println("dao1");
 		List<GoodsVO> goodsList=(ArrayList)sqlSession.selectList("mapper.goods.selectGoodsList",goodsStatus);
-		System.out.println("dao2");
 	   return goodsList;	
 	}
 	@Override
