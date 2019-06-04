@@ -40,7 +40,7 @@
 	   SELECT * FROM (SELECT ROWNUM AS RECNUM
 			                    , T.*
 			                 FROM (SELECT * 
-			                         FROM MEMBERS
+			                         FROM MEMBER
 			                        WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') BETWEEN #{beginDate} and #{endDate}
 			                       
 			                       <if test="search_type=='member_id'">
@@ -70,7 +70,7 @@
 			UPDATE MEMBER
 			<set>
 				<if test=" member_pw!='' and member_pw!=null">
-					MEMBER_PW=#{member_pw},
+					member_pw=#{member_pw},
 				</if>
 				<if test=" member_gender!='' and member_gender!=null">
 					MEMBER_GENDER=#{member_gender},
@@ -121,13 +121,17 @@
 					ZIPCODE=#{zipcode},
 				</if>
 				<if test=" road_address!='' and road_address!=null">
-					ROAD_ADDRESS=#{ROAD_ADDRESS},
+					ROAD_ADDRESS=#{road_address},
 				</if>
-				<if test=" jibun_address!='' and jibun_address!=null">
-					JIBUN_ADDRESS=#{jibun_address},
-				</if>
+			      <if test=" jibun_address!='' and jibun_address!=null">
+			         JIBUN_ADDRESS=#{jibun_address}
+			      </if>
+			      <if test=" detail_address!='' and detail_address!=null">
+			         DETAIL_ADDRESS=#{detail_address}
+			      </if>
 			</set>
-		WHERE MEMBER_ID = #{member_id}
+		WHERE 
+		MEMBER_ID=#{member_id}
 	</update>
 
 </mapper>

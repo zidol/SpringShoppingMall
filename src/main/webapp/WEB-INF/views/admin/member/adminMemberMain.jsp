@@ -1,23 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"
 	isELIgnored="false" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-<!DOCTYPE html >
+
+
 <html>
 <head>
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script>
-function search_goods_list(fixeSearchPeriod){
+function search_member(search_period){	
+	temp=calcPeriod(search_period);
+	var date=temp.split(",");
+	beginDate=date[0];
+	endDate=date[1];
+	//alert("beginDate:"+beginDate+",endDate:"+endDate);
+	//return ;
+	
 	var formObj=document.createElement("form");
-	var i_fixedSearch_period = document.createElement("input");
-	i_fixedSearch_period.name="fixedSearchPeriod";
-	i_fixedSearch_period.value=fixeSearchPeriod;
-    formObj.appendChild(i_fixedSearch_period);
+    
+	var formObj=document.createElement("form");
+	var i_beginDate = document.createElement("input"); 
+	var i_endDate = document.createElement("input");
+    
+	i_beginDate.name="beginDate";
+	i_beginDate.value=beginDate;
+	i_endDate.name="endDate";
+	i_endDate.value=endDate;
+	
+    formObj.appendChild(i_beginDate);
+    formObj.appendChild(i_endDate);
     document.body.appendChild(formObj); 
     formObj.method="get";
-    formObj.action="${contextPath}/admin/goods/adminGoodsMain.do";
+    formObj.action="/bookshop01/admin/member/adminMemberMain.do";
     formObj.submit();
 }
 
@@ -38,13 +55,22 @@ function  calcPeriod(search_period){
 		beginDay=endDay;
 	}else if(search_period=='one_week'){
 		beginYear=dt.getFullYear();
-		beginMonth=dt.getMonth()+1;
+		if(endDay-7<1){
+			beginMonth=dt.getMonth();	
+		}else{
+			beginMonth=dt.getMonth()+1;
+		}
+		
 		dt.setDate(endDay-7);
 		beginDay=dt.getDate();
 		
 	}else if(search_period=='two_week'){
 		beginYear = dt.getFullYear();
-		beginMonth = dt.getMonth()+1;
+		if(endDay-14<1){
+			beginMonth=dt.getMonth();	
+		}else{
+			beginMonth=dt.getMonth()+1;
+		}
 		dt.setDate(endDay-14);
 		beginDay=dt.getDate();
 	}else if(search_period=='one_month'){
@@ -86,6 +112,28 @@ function  calcPeriod(search_period){
 	//alert(beginDate+","+endDate);
 	return beginDate+","+endDate;
 }
+
+
+
+function fn_member_detail(order_id){
+	//alert(order_id);
+	var frm_delivery_list=document.frm_delivery_list;
+	
+
+	var formObj=document.createElement("form");
+	var i_order_id = document.createElement("input");
+	
+	i_order_id.name="order_id";
+	i_order_id.value=order_id;
+	
+    formObj.appendChild(i_order_id);
+    document.body.appendChild(formObj); 
+    formObj.method="post";
+    formObj.action="/bookshop01/admin/member/memberDetail.do";
+    formObj.submit();
+	
+}
+
 
 function fn_enable_detail_search(r_search){
 	var frm_delivery_list=document.frm_delivery_list;
@@ -136,8 +184,8 @@ function fn_detail_search(){
 	endYear=frm_delivery_list.endYear.value;
 	endMonth=frm_delivery_list.endMonth.value;
 	endDay=frm_delivery_list.endDay.value;
-	search_type=frm_delivery_list.s_search_type.value; //콤보박스 값
-	search_word=frm_delivery_list.t_search_word.value; //input tag 값
+	search_type=frm_delivery_list.s_search_type.value;
+	search_word=frm_delivery_list.t_search_word.value;
 
 	var formObj=document.createElement("form");
 	var i_command = document.createElement("input");
@@ -146,10 +194,6 @@ function fn_detail_search(){
 	var i_search_type = document.createElement("input");
 	var i_search_word = document.createElement("input");
     
-	//alert("beginYear:"+beginYear);
-	//alert("endDay:"+endDay);
-	//alert("search_type:"+search_type);
-	//alert("search_word:"+search_word);
 	
     i_command.name="command";
     i_beginDate.name="beginDate";
@@ -169,34 +213,31 @@ function fn_detail_search(){
     formObj.appendChild(i_search_type);
     formObj.appendChild(i_search_word);
     document.body.appendChild(formObj); 
-    formObj.method="get";
-    formObj.action="${contextPath}/admin/goods/adminGoodsMain.do";
+    formObj.method="post";
+    formObj.action="/bookshop01/admin/member/memberDetail.do";
     formObj.submit();
-    //alert("submit");
 	
 }
 </script>
 </head>
 <body>
-	<H3>상품 조회</H3>
-	<form  method="post" name="frm_delivery_list">	
-		<TABLE cellpadding="10" cellspacing="10"  >
-			<TBODY>
-				<TR >
-					<TD>
-						<!-- <input type="radio" name="r_search"  checked/> 등록일로조회 &nbsp;&nbsp;&nbsp;
-						<input type="radio" name="r_search" />상세조회 &nbsp;&nbsp;&nbsp; -->
+	<H3>회원 조회</H3>
+	<form name="frm_delivery_list" >	
+		<table cellpadding="10" cellspacing="10"  >
+			<tbody>
+				<tr>
+					<td>
 						<input type="radio" name="r_search_option" value="simple_search" checked onClick="fn_enable_detail_search(this)"/> 간단조회 &nbsp;&nbsp;&nbsp;
 						<input type="radio" name="r_search_option" value="detail_search"  onClick="fn_enable_detail_search(this)" /> 상세조회 &nbsp;&nbsp;&nbsp;
-					</TD>
-				</TR>
-				<TR >
-					<TD>
+					</td>
+				</tr>
+				<tr>
+					<td>
 					  <select name="curYear">
-					    <c:forEach   var="i" begin="0" end="5">
+					     <c:forEach   var="i" begin="0" end="5">
 					      <c:choose>
 					        <c:when test="${endYear==endYear-i}">
-					          <option value="${endYear}" selected>${endYear}</option>
+					          <option value="${endYear }" selected>${endYear  }</option>
 					        </c:when>
 					        <c:otherwise>
 					          <option value="${endYear-i }">${endYear-i }</option>
@@ -219,7 +260,7 @@ function fn_detail_search(){
 					 <select name="curDay">
 					  <c:forEach   var="i" begin="1" end="31">
 					      <c:choose>
-					        <c:when test="${endDay==i}">
+					        <c:when test="${endDay==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
 					        <c:otherwise>
@@ -228,44 +269,31 @@ function fn_detail_search(){
 					      </c:choose>
 					    </c:forEach>	
 					</select>일  &nbsp;이전&nbsp;&nbsp;&nbsp;&nbsp; 
-					<a href="javascript:search_goods_list('today')">
-					   <img   src="${contextPath}/resources/image/btn_search_one_day.jpg">
+					<a href="javascript:search_member('today')">
+					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_one_day.jpg">
 					</a>
-					<a href="javascript:search_goods_list('one_week')">
-					   <img   src="${contextPath}/resources/image/btn_search_1_week.jpg">
+					<a href="javascript:search_member('one_week')">
+					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_1_week.jpg">
 					</a>
-					<a href="javascript:search_goods_list('two_week')">
-					   <img   src="${contextPath}/resources/image/btn_search_2_week.jpg">
+					<a href="javascript:search_member('two_week')">
+					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_2_week.jpg">
 					</a>
-					<a href="javascript:search_goods_list('one_month')">
+					<a href="javascript:search_member('one_month')">
 					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_1_month.jpg">
 					</a>
-					<a href="javascript:search_goods_list('two_month')">
-					   <img   src="${contextPath}/resources/image/btn_search_2_month.jpg">
+					<a href="javascript:search_member('two_month')">
+					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_2_month.jpg">
 					</a>
-					<a href="javascript:search_goods_list('three_month')">
-					   <img   src="${contextPath}/resources/image/btn_search_3_month.jpg">
+					<a href="javascript:search_member('three_month')">
+					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_3_month.jpg">
 					</a>
-					<a href="javascript:search_goods_list('four_month')">
-					   <img   src="${contextPath}/resources/image/btn_search_4_month.jpg">
+					<a href="javascript:search_member('four_month')">
+					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_4_month.jpg">
 					</a>
 					&nbsp;까지 조회
-					</TD>
-				</TR>
-				<tr>
-				  <td>
-				    <select name="s_search_type" disabled >
-						<option value="all" checked>전체</option>
-						<option value="goods_id">상품번호</option>
-						<option value="goods_title">상품이름</option>
-						<option value="goods_publisher">출판사</option>
-					</select>
-					<!-- <input  type="text"  size="30"  disabled/>  
-					<input   type="button"  value="조회" disabled/> -->
-					<input  type="text"  size="30" name="t_search_word" disabled />  
-					<input   type="button"  value="조회" name="btn_search" onClick="fn_detail_search()" disabled  />
-				  </td>
+					</td>
 				</tr>
+				
 				<tr>
 				  <td>
 					조회 기간:
@@ -284,9 +312,6 @@ function fn_detail_search(){
 					<select name="beginMonth" disabled >
 						 <c:forEach   var="i" begin="1" end="12">
 					      <c:choose>
-					        <c:when test="${beginMonth==i and i < 10}">
-					          <option value="0${i }"  selected>0${i }</option>
-					        </c:when>
 					        <c:when test="${beginMonth==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -306,9 +331,6 @@ function fn_detail_search(){
 					 <select name="beginDay" disabled >
 					  <c:forEach   var="i" begin="1" end="31">
 					      <c:choose>
-					        <c:when test="${beginDay==i and i < 10}">
-					          <option value="0${i }"  selected>0${i }</option>
-					        </c:when>
 					        <c:when test="${beginDay==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -330,10 +352,10 @@ function fn_detail_search(){
 					 <c:forEach   var="i" begin="0" end="5">
 					      <c:choose>
 					        <c:when test="${endYear==endYear-i }">
-					          <option value="${endYear-i }" selected>${endYear-i  }</option>
+					          <option value="${2016-i }" selected>${2016-i  }</option>
 					        </c:when>
 					        <c:otherwise>
-					          <option value="${endYear-i }">${endYear-i }</option>
+					          <option value="${2016-i }">${2016-i }</option>
 					        </c:otherwise>
 					      </c:choose>
 					    </c:forEach>
@@ -341,9 +363,6 @@ function fn_detail_search(){
 					<select name="endMonth" disabled >
 						 <c:forEach   var="i" begin="1" end="12">
 					      <c:choose>
-					        <c:when test="${endMonth==i and i < 10}">
-					          <option value="0${i }"  selected>0${i }</option>
-					        </c:when>
 					        <c:when test="${endMonth==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -363,19 +382,16 @@ function fn_detail_search(){
 					 <select name="endDay" disabled >
 					  <c:forEach   var="i" begin="1" end="31">
 					      <c:choose>
-					        <c:when test="${endDay==i and i < 10}">
-					          <option value="0${i }"  selected>0${i }</option>
-					        </c:when>
 					        <c:when test="${endDay==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
 					        <c:otherwise>
 					          <c:choose>
-					            <c:when test="${i <10 }">
-					              <option value="0${i }">0${i }</option>
+					            <c:when test="${i<10}">
+					              <option value="0${i}">0${i }</option>
 					            </c:when>
 					            <c:otherwise>
-					            <option value="${i }">${i }</option>
+					            <option value="${i}">${i }</option>
 					            </c:otherwise>
 					          </c:choose>
 					        </c:otherwise>
@@ -385,88 +401,114 @@ function fn_detail_search(){
 												 
 				  </td>
 				</tr>
-			</TBODY>
-		</TABLE>
-		<DIV class="clear">
-	</DIV>
-</form>	
-<DIV class="clear"></DIV>
-<TABLE class="list_view">
-		<TBODY align=center >
-			<tr style="background:#33ff00" >
-				<td>상품번호</td>
-				<td>상품이름</td>
-				<td>저자</td>
-				<td>출판사</td>
-				<td>상품가격</td>
-				<td>입고일자</td>
-				<td>출판일</td>
+				<tr>
+				  <td>
+				    <select name="s_search_type" disabled >
+						<option value="all" checked>전체</option>
+						<option value="member_name">회원이름</option>
+						<option value="member_id">회원아이디</option>
+						<option value="member_hp_num">회원휴대폰번호</option>
+						<option value="member_addr">회원주소</option>
+					</select>
+					<input  type="text"  size="30" name="t_search_word" disabled />  
+					<input   type="button"  value="조회" name="btn_search" onClick="fn_detail_search()" disabled  />
+				  </td>
+				</tr>				
+			</tbody>
+		</table>
+		<div class="clear">
+	</div>
+	
+<div class="clear"></div>
+<table class="list_view">
+		<tbody align=center >
+			<tr align=center bgcolor="#ffcc00">
+				<td class="fixed" >회원아이디</td>
+				<td class="fixed">회원이름</td>
+				<td>휴대폰번호</td>
+				<td>주소</td>
+				<td>가입일</td>
+				<td>탈퇴여부</td>
 			</tr>
    <c:choose>
-     <c:when test="${empty newGoodsList }">			
-			<TR>
-		       <TD colspan=8 class="fixed">
-				  <strong>조회된 상품이 없습니다.</strong>
-			   </TD>
-		     </TR>
+     <c:when test="${empty member_list}">			
+			<tr>
+		       <td colspan=5 class="fixed">
+				  <strong>조회된 회원이 없습니다.</strong>
+			   </td>
+		     </tr>
 	 </c:when>
 	 <c:otherwise>
-     <c:forEach var="item" items="${newGoodsList }">
-			 <TR>       
-				<TD>
-				  <strong>${item.goods_id }</strong>
-				</TD>
-				<TD >
-				 <a href="${pageContext.request.contextPath}/admin/goods/modifyGoodsForm.do?goods_id=${item.goods_id}">
-				    <strong>${item.goods_title } </strong>
-				 </a> 
-				</TD>
-				<TD>
-				<strong>${item.goods_writer }</strong> 
-				</TD>
-				<TD >
-				   <strong>${item.goods_publisher }</strong> 
-				</TD>
-				<td>
-				  <strong>${item.goods_sales_price }</strong>
-				</td>
-				<td>
-				 <strong>${item.goods_enter_date }</strong> 
-				</td>
-				<td>
-				    <c:set var="pub_date" value="${item.goods_published_date}" />
-					   <c:set var="arr" value="${fn:split(pub_date,' ')}" />
-					<strong>
-					   <c:out value="${arr[0]}" />
-					</strong>
-				</td>
-				
-			</TR>
-	</c:forEach>
+	     <c:forEach var="item" items="${member_list}" varStatus="item_num">
+	            <tr >       
+					<td width=10%>
+					
+					  <a href="${pageContext.request.contextPath}/admin/member/memberDetail.do?member_id=${item.member_id}">
+					     <strong>${item.member_id}</strong>
+					  </a>
+					</td>
+					<td width=10%>
+					  <strong>${item.member_name}</strong><br>
+					</td>
+					<td width=10% >
+					  <strong>${item.hp1}-${item.hp2}-${item.hp3}</strong><br>
+					</td>
+					<td width=50%>
+					  <strong>${item.road_address}</strong><br>
+					  <strong>${item.jibun_address}</strong><br>
+					  <strong>${item.detail_address}</strong><br>
+					</td>
+					<td width=10%>
+					   <c:set var="join_date" value="${item.join_date}" />
+					   <c:set var="arr" value="${fn:split(join_date,' ')}" />
+					   <strong><c:out value="${arr[0]}" /></strong>
+				    </td>
+				    <td width=10%>
+				       <c:choose>
+				         <c:when test="${item.delete_yn=='N' }">
+				           <strong>활동중</strong>  
+				         </c:when>
+				         <c:otherwise>
+				           <strong>탈퇴</strong>
+				         </c:otherwise>
+				       </c:choose>
+				    </td>
+				</tr>
+		</c:forEach>
 	</c:otherwise>
-  </c:choose>
-           <tr>
+  </c:choose>	
+         <tr>
              <td colspan=8 class="fixed">
                  <c:forEach   var="page" begin="1" end="10" step="1" >
-			         <c:if test="${section >1 && page==1 }">
-			          <a href="${contextPath}/admin/goods/adminGoodsMain.do?section=${section-1}&pageNum=${(section-1)*10 }">&nbsp; prev</a>
-			         </c:if>
-			          <a href="${contextPath}/admin/goods/adminGoodsMain.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
-			         <c:if test="${page ==10 }">
-			          <a href="${contextPath}/admin/goods/adminGoodsMain.do?section=${section+1}&pageNum=${section*10+1}">&nbsp; next</a>
-			         </c:if> 
+		         <c:if test="${chapter >1 && page==1 }">
+		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter-1}&pageNum=${(chapter-1)*10 +1 }">&nbsp;pre &nbsp;</a>
+		         </c:if>
+		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter}&pageNum=${page}">${(chapter-1)*10 +page } </a>
+		         <c:if test="${page ==10 }">
+		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter+1}&pageNum=${chapter*10+1}">&nbsp; next</a>
+		         </c:if> 
 	      		</c:forEach> 
-     
-		</TBODY>
-		
-	</TABLE>
-	<DIV class="clear"></DIV>
-	<br><br><br>
-<H3>상품등록하기</H3>
-<DIV id="search">
-	<form action="${contextPath}/admin/goods/addNewGoodsForm.do">
-		<input   type="submit" value="상품 등록하기">
-	</form>
-</DIV>
+           </td>
+        </tr>  		   
+		</tbody>
+	</table>
+  </form>   	
+	<div class="clear"></div>
+<c:choose>
+ <c:when test="${not empty order_goods_list }">	
+   <DIV id="page_wrap">
+		 <c:forEach   var="page" begin="1" end="10" step="1" >
+		         <c:if test="${chapter >1 && page==1 }">
+		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter-1}&pageNum=${(chapter-1)*10 +1 }">&nbsp;pre &nbsp;</a>
+		         </c:if>
+		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter}&pageNum=${page}">${(chapter-1)*10 +page } </a>
+		         <c:if test="${page ==10 }">
+		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter+1}&pageNum=${chapter*10+1}">&nbsp; next</a>
+		         </c:if> 
+	      </c:forEach> 
+	</DIV>	
+ </c:when>
+</c:choose>
 </body>
 </html>
+

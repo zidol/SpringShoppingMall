@@ -33,6 +33,24 @@ public class OrderVO {
 	private String delivery_state;
 	private Date pay_order_time;
 	private String orderer_hp;
+	private String beginDate;
+	private String endDate;
+
+	public String getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(String beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 
 	// orders 테이블에 없는 필드 추가
 	private int total_goods_price; // 전체 장바구니 금액(배송비 포함X)

@@ -53,7 +53,7 @@ function search_order_history(search_period){
     formObj.appendChild(i_beginDate);
     formObj.appendChild(i_endDate);
     document.body.appendChild(formObj); 
-    formObj.method="post";
+    formObj.method="get";
     formObj.action="${contextPath}/admin/order/adminOrderMain.do";
     formObj.submit();
 }
@@ -86,13 +86,13 @@ function  calcPeriod(search_period){
 		beginDay=endDay;
 	}else if(search_period=='one_week'){
 		beginYear=dt.getFullYear();
-		beginMonth=dt.getMonth()+1;
+		beginMonth=dt.getMonth();
 		dt.setDate(endDay-7);
 		beginDay=dt.getDate();
 		
 	}else if(search_period=='two_week'){
 		beginYear = dt.getFullYear();
-		beginMonth = dt.getMonth()+1;
+		beginMonth = dt.getMonth();
 		dt.setDate(endDay-14);
 		beginDay=dt.getDate();
 	}else if(search_period=='one_month'){
@@ -269,7 +269,7 @@ function fn_detail_search(){
     formObj.appendChild(i_search_type);
     formObj.appendChild(i_search_word);
     document.body.appendChild(formObj); 
-    formObj.method="post";
+    formObj.method="get";
     formObj.action="${contextPath}/admin/order/adminOrderMain.do";
     formObj.submit();
     //alert("submit");
@@ -326,25 +326,25 @@ function fn_detail_search(){
 					      </c:choose>
 					    </c:forEach>	
 					</select>일  &nbsp;이전&nbsp;&nbsp;&nbsp;&nbsp; 
-					<a href="javascript:search_order_list('today')">
+					<a href="javascript:search_order_history('today')">
 					   <img   src="${contextPath}/resources/image/btn_search_one_day.jpg">
 					</a>
-					<a href="javascript:search_order_list('one_week')">
+					<a href="javascript:search_order_history('one_week')">
 					   <img   src="${contextPath}/resources/image/btn_search_1_week.jpg">
 					</a>
-					<a href="javascript:search_order_list('two_week')">
+					<a href="javascript:search_order_history('two_week')">
 					   <img   src="${contextPath}/resources/image/btn_search_2_week.jpg">
 					</a>
-					<a href="javascript:search_order_list('one_month')">
+					<a href="javascript:search_order_history('one_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_1_month.jpg">
 					</a>
-					<a href="javascript:search_order_list('two_month')">
+					<a href="javascript:search_order_history('two_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_2_month.jpg">
 					</a>
-					<a href="javascript:search_order_list('three_month')">
+					<a href="javascript:search_order_history('three_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_3_month.jpg">
 					</a>
-					<a href="javascript:search_order_list('four_month')">
+					<a href="javascript:search_order_history('four_month')">
 					   <img   src="${contextPath}/resources/image/btn_search_4_month.jpg">
 					</a>
 					&nbsp;까지 조회
