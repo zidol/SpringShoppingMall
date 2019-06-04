@@ -78,14 +78,18 @@
 			                 FROM (SELECT * 
 			                         FROM ORDERS
 			                        WHERE TO_CHAR(PAY_ORDER_TIME, 'YYYY-MM-DD') BETWEEN #{beginDate} and #{endDate}
-			                       <if test="search_type=='order_id'">
-			                          AND ORDERER_ID=#{search_word}
-			                       </if>
+			                       
 			                       <if test="search_type=='orderer_name'">
 			                          AND ORDERER_NAME=#{search_word}
 			                       </if>
+			                       <if test="search_type=='orderer_id'">
+			                          AND MEMBER_ID=#{search_word}
+			                       </if>
 			                       <if test="search_type=='orderer_hp'">
 			                          AND ORDERER_HP=#{search_word}
+			                       </if>
+			                       <if test="search_type=='orderer_goods'">
+			                          AND GOODS_TITLE LIKE '%'||#{search_word}||'%'
 			                       </if>
 			                       ORDER BY PAY_ORDER_TIME DESC
 			                       ) T)

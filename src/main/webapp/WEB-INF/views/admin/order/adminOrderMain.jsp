@@ -270,7 +270,7 @@ function fn_detail_search(){
     formObj.appendChild(i_search_word);
     document.body.appendChild(formObj); 
     formObj.method="post";
-    formObj.action="${contextPath}/admin/order/orderDetail.do";
+    formObj.action="${contextPath}/admin/order/adminOrderMain.do";
     formObj.submit();
     //alert("submit");
 	
@@ -369,6 +369,9 @@ function fn_detail_search(){
 					<select name="beginMonth" disabled >
 						 <c:forEach   var="i" begin="1" end="12">
 					      <c:choose>
+					        <c:when test="${beginMonth==i and i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
 					        <c:when test="${beginMonth==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -388,6 +391,9 @@ function fn_detail_search(){
 					 <select name="beginDay" disabled >
 					  <c:forEach   var="i" begin="1" end="31">
 					      <c:choose>
+					        <c:when test="${beginDay==i and i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
 					        <c:when test="${beginDay==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -409,10 +415,10 @@ function fn_detail_search(){
 					 <c:forEach   var="i" begin="0" end="5">
 					      <c:choose>
 					        <c:when test="${endYear==endYear-i }">
-					          <option value="${2016-i }" selected>${2016-i  }</option>
+					          <option value="${endYear-i }" selected>${endYear-i  }</option>
 					        </c:when>
 					        <c:otherwise>
-					          <option value="${2016-i }">${2016-i }</option>
+					          <option value="${endYear-i }">${endYear-i }</option>
 					        </c:otherwise>
 					      </c:choose>
 					    </c:forEach>
@@ -420,6 +426,9 @@ function fn_detail_search(){
 					<select name="endMonth" disabled >
 						 <c:forEach   var="i" begin="1" end="12">
 					      <c:choose>
+					        <c:when test="${endMonth==i and i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
 					        <c:when test="${endMonth==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -439,6 +448,9 @@ function fn_detail_search(){
 					 <select name="endDay" disabled >
 					  <c:forEach   var="i" begin="1" end="31">
 					      <c:choose>
+					        <c:when test="${endDay==i and i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
 					        <c:when test="${endDay==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -505,9 +517,18 @@ function fn_detail_search(){
               <c:when test="${item.delivery_state=='finished_delivering' }">
                 <tr  bgcolor="lightgray">    
               </c:when>
-              <c:otherwise>
+              <c:when test="${item.delivery_state=='delivering' }">
+                <tr  bgcolor="pink">    
+              </c:when>
+              <c:when test="${item.delivery_state=='cancel_order' }">
+                <tr  bgcolor="red">    
+              </c:when>
+              <c:when test="${item.delivery_state=='returning_goods' }">
+                <tr  bgcolor="orange">    
+              </c:when>
+              <%-- <c:otherwise>
                 <tr  bgcolor="orange">   
-              </c:otherwise>
+              </c:otherwise> --%>
             </c:choose>   
 				 <td width=10%>
 				   <a href="javascript:fn_detail_order('${item.order_id}')">
@@ -586,11 +607,11 @@ function fn_detail_search(){
              <td colspan=8 class="fixed">
                  <c:forEach   var="page" begin="1" end="10" step="1" >
 		         <c:if test="${section >1 && page==1 }">
-		          <a href="${contextPath}/admin/order/adminOrderMain.do?section=${section-1}&pageNum=${(section-1)*10 }">&nbsp; prev</a>
+		          <a href="${contextPath}/admin/order/adminOrderMain.do?section=${section-1}&pageNum=${10 }">&nbsp; prev</a>
 		         </c:if>
 		          <a href="${contextPath}/admin/order/adminOrderMain.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
 		         <c:if test="${page ==10 }">
-		          <a href="${contextPath}/admin/order/adminOrderMain.do?section=${section+1}&pageNum=${section*10+1}">&nbsp; next</a>
+		          <a href="${contextPath}/admin/order/adminOrderMain.do?section=${section+1}&pageNum=${1}">&nbsp; next</a>
 		         </c:if> 
 	      		</c:forEach> 
            </td>
