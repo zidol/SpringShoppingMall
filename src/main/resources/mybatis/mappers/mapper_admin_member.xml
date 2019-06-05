@@ -35,29 +35,31 @@
 		<result property="delete_yn" column="delete_yn" />
 	</resultMap>	
 	
-	<!-- 주문 전체 보기, 페이징 처리(한 페이지 10건, 한 섹션에 10페이지) -->
+	<!-- 회원 리스트 보기, 페이징 처리(한 페이지 10건, 한 섹션에 10페이지) -->
 	 <select id="listMember" resultMap="memberResult"  parameterType="java.util.HashMap"  >
 	   SELECT * FROM (SELECT ROWNUM AS RECNUM
-			                    , T.*
-			                 FROM (SELECT * 
-			                         FROM MEMBER
-			                        WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') BETWEEN #{beginDate} and #{endDate}
-			                       
-			                       <if test="search_type=='member_id'">
-			                          AND MEMBER_ID=#{search_word}
-			                       </if>
-			                       <if test="search_type=='member_name'">
-			                          AND MEMBER_NAME=#{search_word}
-			                       </if>
-			                       <if test="search_type=='member_hp_num'">
-			                          AND hp1||hp2||hp3=#{search_word}
-			                       </if>
-			                       ORDER BY JOIN_DATE DESC
-			                       ) T)
-			         WHERE RECNUM BETWEEN (#{section}-1)*100 + (#{pageNum}-1)*10+1 and (#{section}-1)*100 + (#{pageNum})*10
+			               , T.*
+		                FROM (SELECT * 
+		                        FROM MEMBER
+		                       WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') BETWEEN #{beginDate}  and #{endDate} 
+		                      <if test="search_type=='member_id'">
+		                         AND MEMBER_ID LIKE '%'||#{search_word}||'%'
+		                      </if>
+		                      <if test="search_type=='member_name'">
+		                         AND MEMBER_NAME LIKE '%'||#{search_word}||'%'
+		                      </if>
+		                      <if test="search_type=='member_hp_num'">
+		                         AND hp1||hp2||hp3 LIKE '%'||#{search_word}||'%'
+		                      </if>
+		                      <if test="search_type=='member_address'">
+		                         AND JIBUN_ADDRESS||ROAD_ADDRESS||DETAIL_ADDRESS LIKE '%'||#{search_word}||'%'
+		                      </if>
+		                      ORDER BY JOIN_DATE DESC
+		                      ) T)
+		        WHERE RECNUM BETWEEN (#{section}-1)*100 + (#{pageNum}-1)*10+1 and (#{section}-1)*100 + (#{pageNum})*10
 	</select>
 	
-	<!-- 아이디,패스워드로 회원조회 -->
+	<!-- 아이디로 회원조회 -->
 	<select id="memberDetail" resultMap="memberResult"  parameterType="String" >
 	    <![CDATA[
 			SELECT * 
@@ -128,6 +130,9 @@
 			      </if>
 			      <if test=" detail_address!='' and detail_address!=null">
 			         DETAIL_ADDRESS=#{detail_address}
+			      </if>
+			      <if test=" delete_yn!='' and delete_yn!=null">
+			         DELETE_YN=#{delete_yn}
 			      </if>
 			</set>
 		WHERE 

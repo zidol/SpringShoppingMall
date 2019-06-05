@@ -80,13 +80,13 @@
 			                        WHERE TO_CHAR(PAY_ORDER_TIME, 'YYYY-MM-DD') BETWEEN #{beginDate} and #{endDate}
 			                       
 			                       <if test="search_type=='orderer_name'">
-			                          AND ORDERER_NAME=#{search_word}
+			                          AND ORDERER_NAME LIKE '%'||#{search_word}||'%'
 			                       </if>
 			                       <if test="search_type=='orderer_id'">
-			                          AND MEMBER_ID=#{search_word}
+			                          AND MEMBER_ID LIKE '%'||#{search_word}||'%'
 			                       </if>
 			                       <if test="search_type=='orderer_hp'">
-			                          AND ORDERER_HP=#{search_word}
+			                          AND ORDERER_HP LIKE '%'||#{search_word}||'%'
 			                       </if>
 			                       <if test="search_type=='orderer_goods'">
 			                          AND GOODS_TITLE LIKE '%'||#{search_word}||'%'

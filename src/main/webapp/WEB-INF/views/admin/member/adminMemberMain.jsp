@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
 
 
 <html>
@@ -34,7 +35,7 @@ function search_member(search_period){
     formObj.appendChild(i_endDate);
     document.body.appendChild(formObj); 
     formObj.method="get";
-    formObj.action="/bookshop01/admin/member/adminMemberMain.do";
+    formObj.action="${contextPath}/admin/member/adminMemberMain.do";
     formObj.submit();
 }
 
@@ -55,22 +56,13 @@ function  calcPeriod(search_period){
 		beginDay=endDay;
 	}else if(search_period=='one_week'){
 		beginYear=dt.getFullYear();
-		if(endDay-7<1){
-			beginMonth=dt.getMonth();	
-		}else{
-			beginMonth=dt.getMonth()+1;
-		}
-		
+		beginMonth=dt.getMonth();
 		dt.setDate(endDay-7);
 		beginDay=dt.getDate();
 		
 	}else if(search_period=='two_week'){
-		beginYear = dt.getFullYear();
-		if(endDay-14<1){
-			beginMonth=dt.getMonth();	
-		}else{
-			beginMonth=dt.getMonth()+1;
-		}
+		beginYear=dt.getFullYear();
+		beginMonth=dt.getMonth();
 		dt.setDate(endDay-14);
 		beginDay=dt.getDate();
 	}else if(search_period=='one_month'){
@@ -129,7 +121,7 @@ function fn_member_detail(order_id){
     formObj.appendChild(i_order_id);
     document.body.appendChild(formObj); 
     formObj.method="post";
-    formObj.action="/bookshop01/admin/member/memberDetail.do";
+    formObj.action="${contextPath}/admin/member/memberDetail.do";
     formObj.submit();
 	
 }
@@ -206,6 +198,8 @@ function fn_detail_search(){
     i_endDate.value=endYear+"-"+endMonth+"-"+endDay;
     i_search_type.value=search_type;
     i_search_word.value=search_word;
+    console.log(search_type);
+    console.log(search_word);
 	
     formObj.appendChild(i_command);
     formObj.appendChild(i_beginDate);
@@ -213,8 +207,8 @@ function fn_detail_search(){
     formObj.appendChild(i_search_type);
     formObj.appendChild(i_search_word);
     document.body.appendChild(formObj); 
-    formObj.method="post";
-    formObj.action="/bookshop01/admin/member/memberDetail.do";
+    formObj.method="get";
+    formObj.action="${contextPath}/admin/member/adminMemberMain.do";
     formObj.submit();
 	
 }
@@ -270,25 +264,25 @@ function fn_detail_search(){
 					    </c:forEach>	
 					</select>일  &nbsp;이전&nbsp;&nbsp;&nbsp;&nbsp; 
 					<a href="javascript:search_member('today')">
-					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_one_day.jpg">
+					   <img src="${contextPath}/resources/image/btn_search_one_day.jpg">
 					</a>
 					<a href="javascript:search_member('one_week')">
-					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_1_week.jpg">
+					   <img src="${contextPath}/resources/image/btn_search_1_week.jpg">
 					</a>
 					<a href="javascript:search_member('two_week')">
-					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_2_week.jpg">
+					   <img src="${contextPath}/resources/image/btn_search_2_week.jpg">
 					</a>
 					<a href="javascript:search_member('one_month')">
-					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_1_month.jpg">
+					   <img src="${contextPath}/resources/image/btn_search_1_month.jpg">
 					</a>
 					<a href="javascript:search_member('two_month')">
-					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_2_month.jpg">
+					   <img src="${contextPath}/resources/image/btn_search_2_month.jpg">
 					</a>
 					<a href="javascript:search_member('three_month')">
-					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_3_month.jpg">
+					   <img src="${contextPath}/resources/image/btn_search_3_month.jpg">
 					</a>
 					<a href="javascript:search_member('four_month')">
-					   <img   src="${pageContext.request.contextPath}/resources/image/btn_search_4_month.jpg">
+					   <img src="${contextPath}/resources/image/btn_search_4_month.jpg">
 					</a>
 					&nbsp;까지 조회
 					</td>
@@ -300,7 +294,7 @@ function fn_detail_search(){
 					<select name="beginYear" disabled>
 					 <c:forEach   var="i" begin="0" end="5">
 					      <c:choose>
-					        <c:when test="${beginYear==beginYear-i }">
+					        <c:when test="${beginYear==beginYear-i  }">
 					          <option value="${beginYear-i }" selected>${beginYear-i  }</option>
 					        </c:when>
 					        <c:otherwise>
@@ -312,6 +306,9 @@ function fn_detail_search(){
 					<select name="beginMonth" disabled >
 						 <c:forEach   var="i" begin="1" end="12">
 					      <c:choose>
+					        <c:when test="${beginMonth==i && i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
 					        <c:when test="${beginMonth==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -331,6 +328,9 @@ function fn_detail_search(){
 					 <select name="beginDay" disabled >
 					  <c:forEach   var="i" begin="1" end="31">
 					      <c:choose>
+					        <c:when test="${beginDay==i && i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
 					        <c:when test="${beginDay==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -352,10 +352,10 @@ function fn_detail_search(){
 					 <c:forEach   var="i" begin="0" end="5">
 					      <c:choose>
 					        <c:when test="${endYear==endYear-i }">
-					          <option value="${2016-i }" selected>${2016-i  }</option>
+					          <option value="${endYear-i }" selected>${endYear-i  }</option>
 					        </c:when>
 					        <c:otherwise>
-					          <option value="${2016-i }">${2016-i }</option>
+					          <option value="${endYear-i }">${endYear-i }</option>
 					        </c:otherwise>
 					      </c:choose>
 					    </c:forEach>
@@ -363,7 +363,10 @@ function fn_detail_search(){
 					<select name="endMonth" disabled >
 						 <c:forEach   var="i" begin="1" end="12">
 					      <c:choose>
-					        <c:when test="${endMonth==i }">
+					        <c:when test="${endMonth==i && i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
+					         <c:when test="${endMonth==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
 					        <c:otherwise>
@@ -382,6 +385,9 @@ function fn_detail_search(){
 					 <select name="endDay" disabled >
 					  <c:forEach   var="i" begin="1" end="31">
 					      <c:choose>
+					        <c:when test="${endDay==i && i < 10}">
+					          <option value="0${i }"  selected>0${i }</option>
+					        </c:when>
 					        <c:when test="${endDay==i }">
 					          <option value="${i }"  selected>${i }</option>
 					        </c:when>
@@ -404,11 +410,10 @@ function fn_detail_search(){
 				<tr>
 				  <td>
 				    <select name="s_search_type" disabled >
-						<option value="all" checked>전체</option>
-						<option value="member_name">회원이름</option>
+						<option value="member_name" checked>회원이름</option>
 						<option value="member_id">회원아이디</option>
 						<option value="member_hp_num">회원휴대폰번호</option>
-						<option value="member_addr">회원주소</option>
+						<option value="member_address">회원주소</option>
 					</select>
 					<input  type="text"  size="30" name="t_search_word" disabled />  
 					<input   type="button"  value="조회" name="btn_search" onClick="fn_detail_search()" disabled  />
@@ -443,17 +448,17 @@ function fn_detail_search(){
 	            <tr >       
 					<td width=10%>
 					
-					  <a href="${pageContext.request.contextPath}/admin/member/memberDetail.do?member_id=${item.member_id}">
+					  <a href="${contextPath}/admin/member/memberDetail.do?member_id=${item.member_id}">
 					     <strong>${item.member_id}</strong>
 					  </a>
 					</td>
 					<td width=10%>
 					  <strong>${item.member_name}</strong><br>
 					</td>
-					<td width=10% >
+					<td width=20% >
 					  <strong>${item.hp1}-${item.hp2}-${item.hp3}</strong><br>
 					</td>
-					<td width=50%>
+					<td width=40%>
 					  <strong>${item.road_address}</strong><br>
 					  <strong>${item.jibun_address}</strong><br>
 					  <strong>${item.detail_address}</strong><br>
@@ -480,12 +485,12 @@ function fn_detail_search(){
          <tr>
              <td colspan=8 class="fixed">
                  <c:forEach   var="page" begin="1" end="10" step="1" >
-		         <c:if test="${chapter >1 && page==1 }">
-		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter-1}&pageNum=${(chapter-1)*10 +1 }">&nbsp;pre &nbsp;</a>
+		         <c:if test="${section >1 && page==1 }">
+		          <a href="${contextPath}/admin/member/adminMemberMain.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp;prev &nbsp;</a>
 		         </c:if>
-		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter}&pageNum=${page}">${(chapter-1)*10 +page } </a>
+		          <a href="${contextPath}/admin/member/adminMemberMain.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
 		         <c:if test="${page ==10 }">
-		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter+1}&pageNum=${chapter*10+1}">&nbsp; next</a>
+		          <a href="${contextPath}/admin/member/adminMemberMain.do?section=${section+1}&pageNum=${section*10+1}">&nbsp; next</a>
 		         </c:if> 
 	      		</c:forEach> 
            </td>
@@ -498,12 +503,12 @@ function fn_detail_search(){
  <c:when test="${not empty order_goods_list }">	
    <DIV id="page_wrap">
 		 <c:forEach   var="page" begin="1" end="10" step="1" >
-		         <c:if test="${chapter >1 && page==1 }">
-		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter-1}&pageNum=${(chapter-1)*10 +1 }">&nbsp;pre &nbsp;</a>
+		         <c:if test="${section >1 && page==1 }">
+		          <a href="${contextPath}/admin/member/adminMemberMain.do?section=${section-1}&pageNum=${(section-1)*10 +1 }">&nbsp;prev &nbsp;</a>
 		         </c:if>
-		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter}&pageNum=${page}">${(chapter-1)*10 +page } </a>
+		          <a href="${contextPath}/admin/member/adminMemberMain.do?section=${section}&pageNum=${page}">${(section-1)*10 +page } </a>
 		         <c:if test="${page ==10 }">
-		          <a href="${pageContext.request.contextPath}/admin/member/adminMemberMain.do?chapter=${chapter+1}&pageNum=${chapter*10+1}">&nbsp; next</a>
+		          <a href="${contextPath}/admin/member/adminMemberMain.do?section=${section+1}&pageNum=${section*10+1}">&nbsp; next</a>
 		         </c:if> 
 	      </c:forEach> 
 	</DIV>	
