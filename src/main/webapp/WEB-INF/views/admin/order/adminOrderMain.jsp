@@ -473,8 +473,7 @@ function fn_detail_search(){
 				<tr>
 				  <td>
 				    <select name="s_search_type" disabled >
-						<option value="all" checked>전체</option>
-						<option value="orderer_name">주문자이름</option>
+						<option value="orderer_name" checked >주문자이름</option>
 						<option value="orderer_id">주문자아이디</option>
 						<option value="orderer_hp">주문자휴대폰번호</option>
 						<option value="orderer_goods">주문상품품명</option>

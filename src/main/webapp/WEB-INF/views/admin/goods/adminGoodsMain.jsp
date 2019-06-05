@@ -255,8 +255,7 @@ function fn_detail_search(){
 				<tr>
 				  <td>
 				    <select name="s_search_type" disabled >
-						<option value="all" checked>전체</option>
-						<option value="goods_id">상품번호</option>
+						<option value="goods_id" checked>상품번호</option>
 						<option value="goods_title">상품이름</option>
 						<option value="goods_publisher">출판사</option>
 					</select>

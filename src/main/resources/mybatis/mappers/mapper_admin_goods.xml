@@ -157,10 +157,10 @@
 			                          AND GOODS_TITLE LIKE '%'||#{search_word}||'%'
 			                       </if>
 			                       <if test="search_type=='goods_id'">
-			                          AND GOODS_ID=#{search_word}
+			                          AND GOODS_ID LIKE '%'||#{search_word}||'%'
 			                       </if>
 			                       <if test="search_type=='goods_publisher'">
-			                          AND GOODS_PUBLISHER=#{search_word}
+			                          AND GOODS_PUBLISHER LIKE '%'||#{search_word}||'%'
 			                       </if>
 						  ORDER BY GOODS_ENTER_DATE DESC)t)
 					WHERE RECNUM BETWEEN (#{section}-1)*100 + (#{pageNum}-1)*10+1 AND (#{section}-1)*100 + (#{pageNum})*10 	

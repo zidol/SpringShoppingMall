@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -15,14 +15,11 @@
 <script>
 window.onload=function()
 {
-  test();
-}
-
-function test(){
 	init();
-	alert("회원 정보가 수정되었습니다.");
 }
 function init(){
+
+	alert("회원 정보가 수정되었습니다.");
 	var frm_mod_member=document.frm_mod_member;
 	var h_tel1=frm_mod_member.h_tel1;
 	var h_hp1=frm_mod_member.h_hp1;
@@ -126,7 +123,7 @@ function fn_modify_member_info(member_id,mod_type){
 			alert("member_pw:"+value);
 		}else if(mod_type=='member_gender'){
 			var member_gender=frm_mod_member.member_gender;
-			for(var i=0; member_gender.length;i++){
+			for(var i=0; i<member_gender.length; i++){
 			 	if(member_gender[i].checked){
 					value=member_gender[i].value;
 					break;
@@ -138,22 +135,21 @@ function fn_modify_member_info(member_id,mod_type){
 			var member_birth_y=frm_mod_member.member_birth_y;
 			var member_birth_m=frm_mod_member.member_birth_m;
 			var member_birth_d=frm_mod_member.member_birth_d;
-			var member_birth_gn=frm_mod_member.member_birth_gn;
 			
-			for(var i=0; member_birth_y.length;i++){
+			for(var i=0; i<member_birth_y.length;i++){
 			 	if(member_birth_y[i].selected){
 					value_y=member_birth_y[i].value;
 					break;
 				} 
 			}
-			for(var i=0; member_birth_m.length;i++){
+			for(var i=0; i<member_birth_m.length;i++){
 			 	if(member_birth_m[i].selected){
 					value_m=member_birth_m[i].value;
 					break;
 				} 
 			}
 			
-			for(var i=0; member_birth_d.length;i++){
+			for(var i=0; i<member_birth_d.length;i++){
 			 	if(member_birth_d[i].selected){
 					value_d=member_birth_d[i].value;
 					break;
@@ -190,7 +186,7 @@ function fn_modify_member_info(member_id,mod_type){
 			var hp3=frm_mod_member.hp3;
 			var smssts_yn=frm_mod_member.smssts_yn;
 			
-			for(var i=0; hp1.length;i++){
+			for(var i=0; i<hp1.length;i++){
 			 	if(hp1[i].selected){
 					value_hp1=hp1[i].value;
 					break;
@@ -253,6 +249,8 @@ function fn_modify_member_info(member_id,mod_type){
 			},
 			complete : function(data, textStatus) {
 				//alert("작업을완료 했습니다");
+
+				document.location.href="${contextPath}/admin/member/memberDetail.do?member_id=${member_info.member_id}";
 			}
 		}); //end ajax
 }
@@ -264,7 +262,7 @@ function fn_delete_member(member_id ,del_yn){
     
 	
     i_member_id.name="member_id";
-    i_del_yn.name="del_yn";
+    i_del_yn.name="delete_yn";
     i_member_id.value=member_id;
     i_del_yn.value=del_yn;
     
@@ -289,7 +287,7 @@ function fn_delete_member(member_id ,del_yn){
 						<input name="member_id" type="text" size="20" value="${member_info.member_id }"  disabled/>
 					</td>
 					 <td>
-					  <input type="button" value="수정하기" disabled onClick="fn_modify_member_info('${member_info.member_id }','member_name')" />
+					  <input type="button" value="수정하기"  onClick="fn_modify_member_info('${member_info.member_id }','member_name')" disabled />
 					</td>
 				</tr>
 				<tr class="dot_line">
@@ -315,13 +313,11 @@ function fn_delete_member(member_id ,del_yn){
 					<td>
 					  <c:choose >
 					    <c:when test="${member_info.member_gender =='101' }">
-					      <input type="radio" name="member_gender" value="102" />
-						  여성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					      <input type="radio" name="member_gender" value="102" />여성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					   <input type="radio" name="member_gender" value="101" checked />남성
 					    </c:when>
 					    <c:otherwise>
-					      <input type="radio" name="member_gender" value="102"  checked />
-						   여성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					      <input type="radio" name="member_gender" value="102"  checked />여성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					      <input type="radio" name="member_gender" value="101"  />남성
 					   </c:otherwise>
 					   </c:choose>
@@ -334,13 +330,13 @@ function fn_delete_member(member_id ,del_yn){
 					<td class="fixed_join">생년월일</td>
 					<td>
 					   <select name="member_birth_y">
-					     <c:forEach var="i" begin="1" end="100">
+					     <c:forEach var="i" begin="1920" end="2020">
 					       <c:choose>
-					         <c:when test="${member_info.birth_year==1920+i }">
-							   <option value="${ 1920+i}" selected>${ 1920+i} </option>
+					         <c:when test="${member_info.birth_year==i }">
+							   <option value="${ i}" selected>${ i} </option>
 							</c:when>
 							<c:otherwise>
-							  <option value="${ 1920+i}" >${ 1920+i} </option>
+							  <option value="${i}" >${i} </option>
 							</c:otherwise>
 							</c:choose>
 					   	</c:forEach>
