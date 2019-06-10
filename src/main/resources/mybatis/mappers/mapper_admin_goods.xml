@@ -237,9 +237,6 @@
 				<if test=" goods_sales_price!='' and goods_sales_price!=null">
 					GOODS_SALES_PRICE=#{goods_sales_price},
 				</if>
-				<if test=" goods_published_date!='' and goods_published_date!=null">
-			        goods_published_date=#{goods_published_date},
-		       </if>
 				<if test=" goods_point!='' and goods_point!=null">
 					GOODS_POINT=#{goods_point},
 				</if>
